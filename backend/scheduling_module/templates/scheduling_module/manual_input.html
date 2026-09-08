@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}ورود دستی اطلاعات - سامانه زمان‌بندی{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-keyboard"></i>
+                    ورود دستی اطلاعات زمان‌بندی
+                </h4>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="manualInputTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button">
+                            <i class="bi bi-journal-text"></i>
+                            دروس
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="teachers-tab" data-bs-toggle="tab" data-bs-target="#teachers" type="button">
+                            <i class="bi bi-person-badge"></i>
+                            اساتید
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button">
+                            <i class="bi bi-gear"></i>
+                            تنظیمات زمان‌بندی
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content p-3 border border-top-0" id="manualInputTabsContent">
+                    <!-- تب دروس -->
+                    <div class="tab-pane fade show active" id="courses" role="tabpanel">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="add_course" value="1">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">کد درس</label>
+                                        {{ course_form.code }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نام درس</label>
+                                        {{ course_form.name }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">نوع درس</label>
+                                        {{ course_form.course_type }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">تعداد واحد</label>
+                                        {{ course_form.units }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">تعداد دانشجو</label>
+                                        {{ course_form.expected_students }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">نوع مکان مورد نیاز</label>
+                                {{ course_form.required_place_type }}
+                            </div>
+
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i>
+                                افزودن درس
+                            </button>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <h6>دروس اضافه شده:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>کد</th>
+                                        <th>نام</th>
+                                        <th>نوع</th>
+                                        <th>واحد</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">
+                                            هنوز درسی اضافه نشده است
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- تب اساتید -->
+                    <div class="tab-pane fade" id="teachers" role="tabpanel">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="add_teacher" value="1">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">کد استاد</label>
+                                        {{ teacher_form.code }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نام کامل</label>
+                                        {{ teacher_form.full_name }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">جنسیت</label>
+                                        {{ teacher_form.gender }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">حداکثر واحد</label>
+                                        {{ teacher_form.max_units }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">حداقل واحد</label>
+                                        {{ teacher_form.min_units }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-person-plus"></i>
+                                افزودن استاد
+                            </button>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <h6>اساتید اضافه شده:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>کد</th>
+                                        <th>نام</th>
+                                        <th>جنسیت</th>
+                                        <th>حداکثر واحد</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">
+                                            هنوز استادی اضافه نشده است
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- تب تنظیمات -->
+                    <div class="tab-pane fade" id="config" role="tabpanel">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="create_schedule" value="1">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نام زمان‌بندی</label>
+                                        {{ config_form.name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">توضیحات</label>
+                                        {{ config_form.description }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="mt-4">پارامترهای الگوریتم</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">اندازه جمعیت</label>
+                                        {{ config_form.popsize }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">تعداد نسل‌ها</label>
+                                        {{ config_form.maxgen }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">هزینه تداخل استاد</label>
+                                        {{ config_form.teacher_conflict_cost }}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">هزینه تداخل مکان</label>
+                                        {{ config_form.place_conflict_cost }}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">هزینه ظرفیت</label>
+                                        {{ config_form.capacity_cost }}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">هزینه عدم تطابق جنسیت</label>
+                                        {{ config_form.gender_mismatch_cost }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                پس از تکمیل اطلاعات، زمان‌بندی به صورت خودکار انجام خواهد شد.
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-play-circle"></i>
+                                شروع زمان‌بندی
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

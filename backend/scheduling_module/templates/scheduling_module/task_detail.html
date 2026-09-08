@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+
+{% block title %}جزئیات وظیفه - {{ task.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+                <i class="bi bi-info-circle"></i>
+                جزئیات وظیفه: {{ task.name }}
+            </h3>
+            <a href="{% url 'scheduling:task_list' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت به لیست
+            </a>
+        </div>
+
+        <div class="row">
+            <!-- اطلاعات اصلی -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">اطلاعات وظیفه</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <th width="40%">نام:</th>
+                                        <td>{{ task.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ایجاد کننده:</th>
+                                        <td>{{ task.created_by.get_full_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاریخ ایجاد:</th>
+                                        <td>{{ task.created_at|date:"Y/m/d H:i" }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <th width="40%">وضعیت:</th>
+                                        <td>
+                                            <span class="badge
+                                                {% if task.status == 'completed' %}bg-success
+                                                {% elif task.status == 'processing' %}bg-warning
+                                                {% elif task.status == 'failed' %}bg-danger
+                                                {% else %}bg-secondary{% endif %}">
+                                                {{ task.get_status_display }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>زمان اجرا:</th>
+                                        <td>
+                                            {% if task.execution_time %}
+                                            {{ task.execution_time|floatformat:2 }} ثانیه
+                                            {% else %}
+                                            <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاریخ تکمیل:</th>
+                                        <td>
+                                            {% if task.completed_at %}
+                                            {{ task.completed_at|date:"Y/m/d H:i" }}
+                                            {% else %}
+                                            <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        {% if task.description %}
+                        <div class="mt-3">
+                            <strong>توضیحات:</strong>
+                            <p class="mb-0">{{ task.description }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- وضعیت پردازش -->
+                {% if task.status == 'processing' %}
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">در حال پردازش</h5>
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">در حال پردازش...</span>
+                        </div>
+                        <h4 class="mt-3 text-warning">الگوریتم در حال اجرا است</h4>
+                        <p class="text-muted">لطفاً چند لحظه صبر کنید...</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- نتایج -->
+                {% if task.status == 'completed' and result %}
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">نتایج زمان‌بندی</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <div class="border rounded p-3">
+                                    <h3 class="text-primary">{{ result.total_cost }}</h3>
+                                    <small class="text-muted">هزینه کل</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="border rounded p-3">
+                                    <h3 class="text-warning">{{ result.teacher_conflicts }}</h3>
+                                    <small class="text-muted">تداخل اساتید</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="border rounded p-3">
+                                    <h3 class="text-danger">{{ result.place_conflicts }}</h3>
+                                    <small class="text-muted">تداخل مکان‌ها</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="border rounded p-3">
+                                    <h3 class="text-success">{{ result.total_courses }}</h3>
+                                    <small class="text-muted">تعداد دروس</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <a href="{% url 'scheduling:schedule_result' task.id %}" class="btn btn-success me-2">
+                                <i class="bi bi-graph-up"></i>
+                                مشاهده نتایج کامل
+                            </a>
+                            <a href="{% url 'scheduling:download_schedule' task.id %}" class="btn btn-outline-primary">
+                                <i class="bi bi-download"></i>
+                                دانلود زمان‌بندی
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- خطا -->
+                {% if task.status == 'failed' %}
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">خطا در پردازش</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <strong>خطا در اجرای الگوریتم:</strong>
+                            {% if task.result.error %}
+                            <pre class="mt-2">{{ task.result.error }}</pre>
+                            {% else %}
+                            <p class="mb-0">خطای نامشخصی رخ داده است.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- عملیات -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">عملیات</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            {% if task.status == 'completed' %}
+                            <a href="{% url 'scheduling:schedule_result' task.id %}" class="btn btn-success">
+                                <i class="bi bi-graph-up"></i>
+                                مشاهده نتایج
+                            </a>
+                            <a href="{% url 'scheduling:download_schedule' task.id %}?format=text" class="btn btn-outline-primary">
+                                <i class="bi bi-file-text"></i>
+                                دانلود متنی
+                            </a>
+                            <a href="{% url 'scheduling:download_schedule' task.id %}?format=json" class="btn btn-outline-info">
+                                <i class="bi bi-file-code"></i>
+                                دانلود JSON
+                            </a>
+                            {% endif %}
+
+                            {% if user.role == 'supervisor' or task.created_by == user %}
+                            <form method="post" action="{% url 'scheduling:task_delete' task.id %}" class="d-grid">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-delete">
+                                    <i class="bi bi-trash"></i>
+                                    حذف وظیفه
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- اطلاعات فنی -->
+                <div class="card mt-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">اطلاعات فنی</h6>
+                    </div>
+                    <div class="card-body">
+                        <small>
+                            <strong>شناسه:</strong> {{ task.id }}<br>
+                            <strong>فایل پیکربندی:</strong>
+                            {% if task.config_file %}
+                            <a href="{{ task.config_file.url }}" target="_blank">مشاهده</a>
+                            {% else %}
+                            <span class="text-muted">ندارد</span>
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% if task.status == 'processing' %}
+<script>
+    // بروزرسانی خودکار وضعیت
+    function updateTaskStatus() {
+        fetch("{% url 'scheduling:api_task_status' task.id %}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.status !== 'processing') {
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // بروزرسانی هر 5 ثانیه
+    setInterval(updateTaskStatus, 5000);
+</script>
+{% endif %}
+{% endblock %}

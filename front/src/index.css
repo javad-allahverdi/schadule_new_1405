@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f6f6f6;
+  font-family: "Vazirmatn", "Tahoma", sans-serif;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/src/assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Vazirmatn-semibold";
+  src: url("/src/assets/fonts/Vazirmatn-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vazirmatn-medium";
+  src: url("/src/assets/fonts/Vazirmatn-Medium.woff2") format("woff2");
+}
+
+/* @theme {
+   رنگ ها 
+  --color-primary: #fff;  رنگ اصلی 
+  --color-secondary: #2f80ed;  رنگ ثانویه 
+  --color-bg: #f6f6f6;  رنگ پس زمینه  
+  --color-hero: #010a13;
+  --color-text_primary_color: #353535; رنگ متن اصلی
+  --color-text_secondary_color: #717171;  رنگ متن ثانوی 
+  --color-line_color: #cbcbcb;
+  --color-disable: #85858b;
+  --color-title_header: #ededed;
+
+   فونت ها 
+  --font-primary: "Vazirmatn", sans-serif;
+  --font-secondary: "Vazirmatn-semibold", sans-serif;
+  --font-box: "Vazirmatn-medium", sans-serif;
+
+   breakpoints 
+  --breakpoint-mobile: 25rem;
+  --breakpoint-monitor: 60rem;
+} */
+
+
+@theme {
+  /* رنگ‌های اصلی (همان‌ها با کمی بهبود) */
+  --color-primary: #ffffff;
+  --color-secondary: #2f80ed;
+  --color-bg: #f8fafc; /* کمی روشن‌تر و آبی‌تر */
+  
+  /* رنگ‌های جدید پیشنهادی */
+  --color-primary-dark: #1e40af; /* آبی تیره برای hover و accent */
+  --color-success: #10b981; /* سبز برای موفقیت */
+  --color-warning: #f59e0b; /* زرد برای هشدار */
+  --color-error: #ef4444; /* قرمز برای خطا */
+  
+  /* رنگ‌های موجود */
+  --color-hero: #010a13;
+  --color-text_primary_color: #1e293b; /* تیره‌تر برای خوانایی بهتر */
+  --color-text_secondary_color: #64748b; /* خاکستری آبی */
+  --color-line_color: #e2e8f0; /* روشن‌تر */
+  --color-disable: #94a3b8;
+  --color-title_header: #f1f5f9;
+
+  /* shadow ها */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  
+  /* rounded */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+
+    /* فونت ها */
+  --font-primary: "Vazirmatn", sans-serif;
+  --font-secondary: "Vazirmatn-semibold", sans-serif;
+  --font-box: "Vazirmatn-medium", sans-serif;
+
+  /* breakpoints */
+  --breakpoint-mobile: 25rem;
+  --breakpoint-monitor: 60rem;
+}
+
+select {
+  appearance: none; /* توی اکثر مرورگرها */
+  -webkit-appearance: none; /* برای سافاری و کروم */
+  -moz-appearance: none; /* برای فایرفاکس */
+  background-image: none; /* اگر آیکون پس‌زمینه هست */
+}

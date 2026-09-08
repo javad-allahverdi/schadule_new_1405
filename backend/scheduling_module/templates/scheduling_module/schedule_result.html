@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block title %}نتایج زمان‌بندی - {{ task.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+                <i class="bi bi-graph-up"></i>
+                نتایج زمان‌بندی: {{ task.name }}
+            </h3>
+            <div>
+                <a href="{% url 'scheduling:task_detail' task.id %}" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-arrow-right"></i>
+                    بازگشت
+                </a>
+                <a href="{% url 'scheduling:download_schedule' task.id %}" class="btn btn-primary">
+                    <i class="bi bi-download"></i>
+                    دانلود
+                </a>
+            </div>
+        </div>
+
+        <!-- آمار کلی -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ result.total_courses }}</h3>
+                        <p class="mb-0">تعداد کلاس‌ها</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ result.total_cost }}</h3>
+                        <p class="mb-0">هزینه کل</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ result.teacher_conflicts }}</h3>
+                        <p class="mb-0">تداخل اساتید</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ result.place_conflicts }}</h3>
+                        <p class="mb-0">تداخل مکان‌ها</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- جدول زمان‌بندی -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">زمان‌بندی کلاس‌ها</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>روز</th>
+                                        <th>زمان</th>
+                                        <th>درس</th>
+                                        <th>استاد</th>
+                                        <th>مکان</th>
+                                        <th>ظرفیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in result.schedule_data.courses %}
+                                    <tr>
+                                        <td>
+                                            <span class="badge bg-primary">{{ course.day }}</span>
+                                        </td>
+                                        <td>
+                                            <small>{{ course.slot_id }}</small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ course.course_code }}</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                {% with course_info=course.course_code|get_course_info %}
+                                                    {{ course_info.name }}
+                                                {% endwith %}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {% with teacher_info=course.teacher_code|get_teacher_info %}
+                                                    {{ teacher_info.full_name }}
+                                                {% endwith %}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {% with place_info=course.place_code|get_place_info %}
+                                                    {{ place_info.name }}
+                                                {% endwith %}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                {% with place_info=course.place_code|get_place_info %}
+                                                    {{ place_info.capacity }}
+                                                {% endwith %}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-4">
+                                            هیچ کلاسی برنامه‌ریزی نشده است
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تحلیل و آمار -->
+            <div class="col-md-4">
+                <!-- تحلیل استفاده از منابع -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">تحلیل استفاده از منابع</h6>
+                    </div>
+                    <div class="card-body">
+                        {% if analysis %}
+                        <div class="mb-3">
+                            <strong>استفاده از روزها:</strong>
+                            <ul class="list-unstyled mt-2">
+                                {% for day, count in analysis.days_usage.items %}
+                                <li>
+                                    <small>روز {{ day }}: {{ count }} کلاس</small>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>بار کاری اساتید:</strong>
+                            <ul class="list-unstyled mt-2">
+                                {% for teacher, count in analysis.teacher_workload.items|slice:":5" %}
+                                <li>
+                                    <small>
+                                        {% with teacher_info=teacher|get_teacher_info %}
+                                            {{ teacher_info.full_name|default:teacher }}: {{ count }} کلاس
+                                        {% endwith %}
+                                    </small>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center">تحلیل در دسترس نیست</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- عملیات سریع -->
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">عملیات</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'scheduling:download_schedule' task.id %}?format=text"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-file-text"></i>
+                                دانلود متنی
+                            </a>
+                            <a href="{% url 'scheduling:download_schedule' task.id %}?format=json"
+                               class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-file-code"></i>
+                                دانلود JSON
+                            </a>
+                            <a href="{% url 'scheduling:schedule_analysis' task.id %}"
+                               class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-bar-chart"></i>
+                                تحلیل پیشرفته
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // مرتب‌سازی جدول
+    document.addEventListener('DOMContentLoaded', function() {
+        const table = document.querySelector('table');
+        if (table) {
+            // اضافه کردن قابلیت مرتب‌سازی به جدول
+            const headers = table.querySelectorAll('th');
+            headers.forEach((header, index) => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', () => {
+                    sortTable(index);
+                });
+            });
+        }
+    });
+
+    function sortTable(columnIndex) {
+        // پیاده‌سازی مرتب‌سازی جدول
+        console.log('مرتب‌سازی ستون: ' + columnIndex);
+    }
+</script>
+{% endblock %}

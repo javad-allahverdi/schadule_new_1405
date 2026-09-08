@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}برنامه هفتگی - سامانه زمان‌بندی{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+                <i class="bi bi-calendar-week"></i>
+                برنامه هفتگی
+            </h3>
+            <small class="text-muted">کد استاد: {{ teacher_code }}</small>
+        </div>
+
+        {% if schedules %}
+            {% for schedule in schedules %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        زمان‌بندی: {{ schedule.task.name }}
+                        <small class="float-end">
+                            ایجاد شده در: {{ schedule.task.created_at|date:"Y/m/d" }}
+                        </small>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- برنامه هفتگی -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ساعت / روز</th>
+                                    <th>شنبه</th>
+                                    <th>یکشنبه</th>
+                                    <th>دوشنبه</th>
+                                    <th>سه‌شنبه</th>
+                                    <th>چهارشنبه</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- این بخش نیاز به پیاده‌سازی کامل دارد -->
+                                <tr>
+                                    <td class="table-secondary">۸:۰۰ - ۱۰:۰۰</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-secondary">۱۰:۰۰ - ۱۲:۰۰</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <!-- ادامه بازه‌های زمانی -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- لیست دروس -->
+                    <h6 class="mt-4">دروس این ترم:</h6>
+                    <div class="row">
+                        {% for course in schedule.courses %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card border-primary">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ course.course_code }}</h6>
+                                    <p class="card-text small mb-1">
+                                        <strong>زمان:</strong>
+                                        روز {{ course.day }} - ساعت {{ course.slot_id }}
+                                    </p>
+                                    <p class="card-text small mb-1">
+                                        <strong>مکان:</strong> {{ course.place_code }}
+                                    </p>
+                                    <p class="card-text small mb-0">
+                                        <strong>نوع:</strong>
+                                        {% with course_info=course.course_code|get_course_info %}
+                                            {{ course_info.course_type }}
+                                        {% endwith %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <a href="{% url 'scheduling:teacher_schedule_detail' schedule.task.id %}"
+                       class="btn btn-sm btn-outline-primary">
+                        مشاهده جزئیات کامل
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-calendar-x display-1 text-muted"></i>
+                <h4 class="text-muted mt-3">برنامه‌ای یافت نشد</h4>
+                <p class="text-muted">هنوز هیچ زمان‌بندی برای شما ایجاد نشده است.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
