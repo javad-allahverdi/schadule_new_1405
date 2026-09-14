@@ -1,0 +1,847 @@
+{
+  "key": "seed_02_computer_engineering",
+  "title": "گروه مهندسی کامپیوتر — نیمسال دوم",
+  "difficulty": "medium",
+  "difficulty_label": "متوسط",
+  "description": "مجموعه‌ی متوسط با ۷ استاد، ۶ مکان، ۱۲ درس و ۳ گروه دانشجویی. هر گروه دانشجویی ۴ درس الزامی دارد؛ بنابراین الگوریتم باید علاوه بر تداخل استاد و مکان، از هم‌زمانی دروس الزامیِ یک ورودی هم جلوگیری کند. دو استاد نیز روزهای مشخصی در دسترس نیستند.",
+  "settings": {
+    "name": "بنچمارک ۲ — مهندسی کامپیوتر",
+    "semester": "نیمسال دوم ۱۴۰۴-۱۴۰۵",
+    "days_of_week": [
+      {
+        "id": 0,
+        "name": "شنبه",
+        "enabled": true
+      },
+      {
+        "id": 1,
+        "name": "یکشنبه",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "name": "دوشنبه",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "name": "سه‌شنبه",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "name": "چهارشنبه",
+        "enabled": true
+      }
+    ],
+    "time_slots": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "enabled": true
+      }
+    ],
+    "max_units_per_student": 20,
+    "max_classes_per_day": 3
+  },
+  "places": [
+    {
+      "code": "R201",
+      "name": "کلاس ۲۰۱",
+      "capacity": 60,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R202",
+      "name": "کلاس ۲۰۲",
+      "capacity": 50,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R203",
+      "name": "کلاس ۲۰۳",
+      "capacity": 45,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R204",
+      "name": "کلاس ۲۰۴",
+      "capacity": 35,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "L301",
+      "name": "آزمایشگاه سخت‌افزار",
+      "capacity": 25,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [
+        "برد آموزشی",
+        "اسیلوسکوپ"
+      ],
+      "available": true
+    },
+    {
+      "code": "L302",
+      "name": "سایت کامپیوتر",
+      "capacity": 30,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [
+        "۳۰ رایانه"
+      ],
+      "available": true
+    }
+  ],
+  "teachers": [
+    {
+      "code": "T11",
+      "full_name": "دکتر حسین رضایی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 14,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T12",
+      "full_name": "دکتر فاطمه صادقی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 14,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T13",
+      "full_name": "دکتر علی محمدی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "چهارشنبه"
+      ]
+    },
+    {
+      "code": "T14",
+      "full_name": "دکتر زهرا کریمی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T15",
+      "full_name": "دکتر محمد حسینی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T16",
+      "full_name": "مهندس نگار شریفی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "شنبه",
+        "یکشنبه"
+      ]
+    },
+    {
+      "code": "T17",
+      "full_name": "دکتر بهرام قاسمی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    }
+  ],
+  "courses": [
+    {
+      "code": "C201",
+      "name": "ساختمان داده‌ها",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 55,
+      "teachers": [
+        "T11",
+        "T15"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C202",
+      "name": "طراحی الگوریتم",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 45,
+      "teachers": [
+        "T11"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C203",
+      "name": "مدارهای منطقی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 50,
+      "teachers": [
+        "T13",
+        "T17"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C204",
+      "name": "آزمایشگاه مدار منطقی",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 24,
+      "teachers": [
+        "T13"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C205",
+      "name": "معماری کامپیوتر",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 45,
+      "teachers": [
+        "T17"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C206",
+      "name": "سیستم‌عامل",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 48,
+      "teachers": [
+        "T12"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C207",
+      "name": "پایگاه داده",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 44,
+      "teachers": [
+        "T12",
+        "T14"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C208",
+      "name": "آزمایشگاه پایگاه داده",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 28,
+      "teachers": [
+        "T14"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C209",
+      "name": "مهندسی نرم‌افزار ۱",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 42,
+      "teachers": [
+        "T15"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C210",
+      "name": "شبکه‌های کامپیوتری",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 40,
+      "teachers": [
+        "T16"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C211",
+      "name": "ریاضیات گسسته",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 58,
+      "teachers": [
+        "T14"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C212",
+      "name": "زبان تخصصی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 34,
+      "teachers": [
+        "T16"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    }
+  ],
+  "student_groups": [
+    {
+      "name": "کامپیوتر ورودی ۱۴۰۳",
+      "size": 55,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی کامپیوتر",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C201",
+        "C203",
+        "C211",
+        "C204"
+      ],
+      "optional_courses": [
+        "C212"
+      ]
+    },
+    {
+      "name": "کامپیوتر ورودی ۱۴۰۲",
+      "size": 48,
+      "entry_year": 1402,
+      "field_of_study": "مهندسی کامپیوتر",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C202",
+        "C206",
+        "C207",
+        "C208"
+      ],
+      "optional_courses": [
+        "C212"
+      ]
+    },
+    {
+      "name": "کامپیوتر ورودی ۱۴۰۱",
+      "size": 42,
+      "entry_year": 1401,
+      "field_of_study": "مهندسی کامپیوتر",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C205",
+        "C209",
+        "C210"
+      ],
+      "optional_courses": []
+    }
+  ],
+  "constraints": [],
+  "stats": {
+    "teachers": 7,
+    "places": 6,
+    "courses": 12,
+    "student_groups": 3,
+    "constraints": 0,
+    "total_units": 31,
+    "sessions": 31,
+    "days": 5,
+    "slots_per_day": 4,
+    "timetable_cells": 20,
+    "capacity_cells": 120,
+    "load_factor": 0.258
+  },
+  "target": {
+    "cost": 0.0,
+    "entries": [
+      {
+        "course_code": "C201",
+        "course_name": "ساختمان داده‌ها",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T15",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C201",
+        "course_name": "ساختمان داده‌ها",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T11",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C201",
+        "course_name": "ساختمان داده‌ها",
+        "session_index": 2,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T11",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C202",
+        "course_name": "طراحی الگوریتم",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T11",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C202",
+        "course_name": "طراحی الگوریتم",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T11",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C202",
+        "course_name": "طراحی الگوریتم",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T11",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C203",
+        "course_name": "مدارهای منطقی",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T13",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C203",
+        "course_name": "مدارهای منطقی",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T17",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C203",
+        "course_name": "مدارهای منطقی",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T17",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C204",
+        "course_name": "آزمایشگاه مدار منطقی",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T13",
+        "place_code": "L302"
+      },
+      {
+        "course_code": "C205",
+        "course_name": "معماری کامپیوتر",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T17",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C205",
+        "course_name": "معماری کامپیوتر",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T17",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C205",
+        "course_name": "معماری کامپیوتر",
+        "session_index": 2,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T17",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C206",
+        "course_name": "سیستم‌عامل",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T12",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C206",
+        "course_name": "سیستم‌عامل",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T12",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C206",
+        "course_name": "سیستم‌عامل",
+        "session_index": 2,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T12",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C207",
+        "course_name": "پایگاه داده",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T14",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C207",
+        "course_name": "پایگاه داده",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T14",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C207",
+        "course_name": "پایگاه داده",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T12",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C208",
+        "course_name": "آزمایشگاه پایگاه داده",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T14",
+        "place_code": "L302"
+      },
+      {
+        "course_code": "C209",
+        "course_name": "مهندسی نرم‌افزار ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T15",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C209",
+        "course_name": "مهندسی نرم‌افزار ۱",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T15",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C209",
+        "course_name": "مهندسی نرم‌افزار ۱",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T15",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C210",
+        "course_name": "شبکه‌های کامپیوتری",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T16",
+        "place_code": "R202"
+      },
+      {
+        "course_code": "C210",
+        "course_name": "شبکه‌های کامپیوتری",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T16",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C210",
+        "course_name": "شبکه‌های کامپیوتری",
+        "session_index": 2,
+        "day": "سه‌شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T16",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C211",
+        "course_name": "ریاضیات گسسته",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T14",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C211",
+        "course_name": "ریاضیات گسسته",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T14",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C211",
+        "course_name": "ریاضیات گسسته",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T14",
+        "place_code": "R201"
+      },
+      {
+        "course_code": "C212",
+        "course_name": "زبان تخصصی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T16",
+        "place_code": "R203"
+      },
+      {
+        "course_code": "C212",
+        "course_name": "زبان تخصصی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T16",
+        "place_code": "R201"
+      }
+    ],
+    "satisfied_time_preferences": 0,
+    "total_time_preferences": 0,
+    "generated_by": "scheduling_module.benchmarks.solver.TargetSolver (backtracking)",
+    "validated_with": "HybridBBO_RL_Scheduler._fitness"
+  }
+}

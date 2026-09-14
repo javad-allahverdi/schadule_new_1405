@@ -174,6 +174,14 @@ urlpatterns = [
     path('api/dashboard/university/', views.UniversityDashboardAPIView.as_view(), name='api_university_dashboard'),
     path('api/dashboard/education-officer/', views.EducationOfficerDashboardAPIView.as_view(), name='api_education_officer_dashboard'),
     
+    # مجموعه‌های داده‌ی آزمون (Benchmark) و پاسخ مرجع
+    path('api/benchmarks/seeds/', views.BenchmarkSeedListAPIView.as_view(),
+         name='api_benchmark_seed_list'),
+    path('api/benchmarks/seeds/<str:seed_key>/', views.BenchmarkSeedDetailAPIView.as_view(),
+         name='api_benchmark_seed_detail'),
+    path('api/benchmarks/seeds/<str:seed_key>/load/', views.BenchmarkSeedLoadAPIView.as_view(),
+         name='api_benchmark_seed_load'),
+
     # APIهای ساده
     path('api/universities/list/', views.api_university_list, name='api_university_list'),
     path('api/universities/create/', views.api_create_university, name='api_create_university'),

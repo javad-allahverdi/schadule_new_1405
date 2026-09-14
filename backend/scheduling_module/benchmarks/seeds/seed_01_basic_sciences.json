@@ -1,0 +1,456 @@
+{
+  "key": "seed_01_basic_sciences",
+  "title": "دانشکده علوم پایه — نیمسال اول",
+  "difficulty": "easy",
+  "difficulty_label": "آسان",
+  "description": "کوچک‌ترین مجموعه آزمون: ۴ استاد، ۴ مکان و ۶ درس بدون محدودیت جنسیتی، بدون عدم‌دسترسی استاد و بدون محدودیت مکانی. فضای جواب بسیار بزرگ‌تر از نیاز مسئله است، بنابراین الگوریتم باید به‌راحتی به هزینه‌ی صفر برسد. برای نمایش اولیه و بررسی سلامت کل مسیر (ورود داده → اجرا → مقایسه) مناسب است.",
+  "settings": {
+    "name": "بنچمارک ۱ — علوم پایه",
+    "semester": "نیمسال اول ۱۴۰۴-۱۴۰۵",
+    "days_of_week": [
+      {
+        "id": 0,
+        "name": "شنبه",
+        "enabled": true
+      },
+      {
+        "id": 1,
+        "name": "یکشنبه",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "name": "دوشنبه",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "name": "سه‌شنبه",
+        "enabled": true
+      }
+    ],
+    "time_slots": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "enabled": true
+      }
+    ],
+    "max_units_per_student": 20,
+    "max_classes_per_day": 3
+  },
+  "places": [
+    {
+      "code": "R101",
+      "name": "کلاس ۱۰۱",
+      "capacity": 45,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R102",
+      "name": "کلاس ۱۰۲",
+      "capacity": 40,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R103",
+      "name": "کلاس ۱۰۳",
+      "capacity": 35,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "L201",
+      "name": "آزمایشگاه فیزیک",
+      "capacity": 25,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    }
+  ],
+  "teachers": [
+    {
+      "code": "T01",
+      "full_name": "دکتر مریم احمدی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T02",
+      "full_name": "دکتر رضا کاظمی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T03",
+      "full_name": "دکتر سارا موسوی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T04",
+      "full_name": "دکتر امیر نجفی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    }
+  ],
+  "courses": [
+    {
+      "code": "C101",
+      "name": "ریاضی عمومی ۱",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 40,
+      "teachers": [
+        "T01",
+        "T03"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C102",
+      "name": "فیزیک ۱",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 38,
+      "teachers": [
+        "T02"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C103",
+      "name": "آزمایشگاه فیزیک ۱",
+      "course_type": "عملی",
+      "unit_type": "پایه",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 22,
+      "teachers": [
+        "T02",
+        "T04"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C104",
+      "name": "شیمی عمومی",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 35,
+      "teachers": [
+        "T04"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C105",
+      "name": "زبان انگلیسی عمومی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 30,
+      "teachers": [
+        "T03"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C106",
+      "name": "مبانی کامپیوتر",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 32,
+      "teachers": [
+        "T01"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    }
+  ],
+  "student_groups": [
+    {
+      "name": "ورودی ۱۴۰۴ — گروه الف",
+      "size": 40,
+      "entry_year": 1404,
+      "field_of_study": "علوم پایه",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C101",
+        "C102",
+        "C103"
+      ],
+      "optional_courses": [
+        "C105"
+      ]
+    },
+    {
+      "name": "ورودی ۱۴۰۴ — گروه ب",
+      "size": 32,
+      "entry_year": 1404,
+      "field_of_study": "علوم پایه",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C104",
+        "C105",
+        "C106"
+      ],
+      "optional_courses": []
+    }
+  ],
+  "constraints": [],
+  "stats": {
+    "teachers": 4,
+    "places": 4,
+    "courses": 6,
+    "student_groups": 2,
+    "constraints": 0,
+    "total_units": 13,
+    "sessions": 13,
+    "days": 4,
+    "slots_per_day": 4,
+    "timetable_cells": 16,
+    "capacity_cells": 64,
+    "load_factor": 0.203
+  },
+  "target": {
+    "cost": 0.0,
+    "entries": [
+      {
+        "course_code": "C101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T03",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T03",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 2,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T01",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C102",
+        "course_name": "فیزیک ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T02",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C102",
+        "course_name": "فیزیک ۱",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T02",
+        "place_code": "R102"
+      },
+      {
+        "course_code": "C102",
+        "course_name": "فیزیک ۱",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T02",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C103",
+        "course_name": "آزمایشگاه فیزیک ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T04",
+        "place_code": "L201"
+      },
+      {
+        "course_code": "C104",
+        "course_name": "شیمی عمومی",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T04",
+        "place_code": "R103"
+      },
+      {
+        "course_code": "C104",
+        "course_name": "شیمی عمومی",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T04",
+        "place_code": "R103"
+      },
+      {
+        "course_code": "C105",
+        "course_name": "زبان انگلیسی عمومی",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T03",
+        "place_code": "R101"
+      },
+      {
+        "course_code": "C105",
+        "course_name": "زبان انگلیسی عمومی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T03",
+        "place_code": "R103"
+      },
+      {
+        "course_code": "C106",
+        "course_name": "مبانی کامپیوتر",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T01",
+        "place_code": "R102"
+      },
+      {
+        "course_code": "C106",
+        "course_name": "مبانی کامپیوتر",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T01",
+        "place_code": "R103"
+      }
+    ],
+    "satisfied_time_preferences": 0,
+    "total_time_preferences": 0,
+    "generated_by": "scheduling_module.benchmarks.solver.TargetSolver (backtracking)",
+    "validated_with": "HybridBBO_RL_Scheduler._fitness"
+  }
+}

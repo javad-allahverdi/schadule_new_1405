@@ -1,7 +1,9 @@
 // src/components/SchedulingRun.jsx
 import { useEffect, useRef, useState } from "react";
-import { Plus, Play, Download, CheckCircle2, XCircle, Trash2 } from "lucide-react";
+import { Plus, Play, Download, CheckCircle2, XCircle, Trash2, Scale } from "lucide-react";
 import schedulingService from "../services/schedulingService";
+import benchmarkService from "../services/benchmarkService";
+import ScheduleComparison from "./ScheduleComparison";
 import authService from "../services/auth";
 import toast from "../utils/toast";
 import AnimatedModal from "./AnimatedModal";
@@ -43,6 +45,8 @@ export default function SchedulingRun() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [rejectNote, setRejectNote] = useState("");
   const [showReject, setShowReject] = useState(false);
+  const [comparison, setComparison] = useState(null);
+  const [comparing, setComparing] = useState(false);
   const pollRef = useRef(null);
 
   useEffect(() => {
@@ -120,8 +124,24 @@ export default function SchedulingRun() {
   const openDetail = async (task) => {
     const res = await schedulingService.getStatus(task.id);
     if (res.success) {
+      // گزارش مقایسه مربوط به همان اجراست؛ با باز کردن اجرای دیگر باید پاک شود
+      setComparison(null);
       setSelectedTask({ ...task, ...res.data });
       if (task.status === "processing") startPolling(task.id);
+    }
+  };
+
+  const handleCompare = async () => {
+    setComparing(true);
+    try {
+      const res = await benchmarkService.compare(selectedTask.id);
+      if (res.success) {
+        setComparison(res.data);
+      } else {
+        toast.error(res.message);
+      }
+    } finally {
+      setComparing(false);
     }
   };
 
@@ -248,7 +268,7 @@ export default function SchedulingRun() {
       </AnimatedModal>
 
       {/* جزئیات و نتیجه‌ی یک اجرا */}
-      <AnimatedModal isVisible={!!selectedTask} onClose={() => { clearInterval(pollRef.current); setSelectedTask(null); }}>
+      <AnimatedModal isVisible={!!selectedTask} onClose={() => { clearInterval(pollRef.current); setSelectedTask(null); setComparison(null); }}>
         {selectedTask && (
           <div className="max-h-[75vh] overflow-y-auto p-1">
             <div className="flex justify-between items-start mb-4">
@@ -342,7 +362,28 @@ export default function SchedulingRun() {
                       <XCircle size={14} /> رد و بازنگری
                     </Button>
                   )}
+                  {/* فقط نیمسال‌هایی که از داده‌ی آزمون ساخته شده‌اند پاسخ مرجع دارند */}
+                  {selectedTask.benchmark_key && (
+                    <Button
+                      type="button"
+                      onClick={handleCompare}
+                      disabled={comparing}
+                      className="bg-text_primary_color text-white px-3 py-2 w-auto h-auto flex items-center gap-1 text-sm"
+                    >
+                      <Scale size={14} />
+                      {comparing ? "در حال مقایسه..." : "مقایسه با پاسخ مرجع"}
+                    </Button>
+                  )}
                 </div>
+
+                {comparison && (
+                  <div className="mt-6 pt-5 border-t border-line_color">
+                    <h4 className="font-secondary text-text_primary_color mb-3">
+                      مقایسه با پاسخ مرجع — {comparison.seed?.title}
+                    </h4>
+                    <ScheduleComparison comparison={comparison} />
+                  </div>
+                )}
               </>
             )}
           </div>

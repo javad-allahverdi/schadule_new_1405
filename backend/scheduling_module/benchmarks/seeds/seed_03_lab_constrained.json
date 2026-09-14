@@ -1,0 +1,736 @@
+{
+  "key": "seed_03_lab_constrained",
+  "title": "دانشکده فنی — نیمسال آزمایشگاه‌محور",
+  "difficulty": "hard",
+  "difficulty_label": "دشوار",
+  "description": "مجموعه‌ای که گلوگاه آن «مکان» است: ۵ درس فقط در دو آزمایشگاه و یک کارگاه قابل برگزاری‌اند، دو درس مکان الزامی (required_place) دارند و سه محدودیت place_unavailable برخی بازه‌های همان مکان‌ها را می‌بندد. ظرفیت کلاس‌ها هم تنگ است، بنابراین دروس پرجمعیت فقط چند مکان مجاز دارند.",
+  "settings": {
+    "name": "بنچمارک ۳ — آزمایشگاه‌محور",
+    "semester": "نیمسال اول ۱۴۰۴-۱۴۰۵",
+    "days_of_week": [
+      {
+        "id": 0,
+        "name": "شنبه",
+        "enabled": true
+      },
+      {
+        "id": 1,
+        "name": "یکشنبه",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "name": "دوشنبه",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "name": "سه‌شنبه",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "name": "چهارشنبه",
+        "enabled": true
+      }
+    ],
+    "time_slots": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "enabled": true
+      }
+    ],
+    "max_units_per_student": 20,
+    "max_classes_per_day": 3
+  },
+  "places": [
+    {
+      "code": "R301",
+      "name": "آمفی‌تئاتر کوچک",
+      "capacity": 90,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R302",
+      "name": "کلاس ۳۰۲",
+      "capacity": 45,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "R303",
+      "name": "کلاس ۳۰۳",
+      "capacity": 30,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "L401",
+      "name": "آزمایشگاه کنترل",
+      "capacity": 20,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [
+        "کیت کنترل"
+      ],
+      "available": true
+    },
+    {
+      "code": "L402",
+      "name": "آزمایشگاه الکترونیک",
+      "capacity": 22,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [
+        "منبع تغذیه"
+      ],
+      "available": true
+    },
+    {
+      "code": "W501",
+      "name": "کارگاه ماشین‌ابزار",
+      "capacity": 18,
+      "place_type": "کارگاه",
+      "gender": 0,
+      "facilities": [
+        "تراش",
+        "فرز"
+      ],
+      "available": true
+    }
+  ],
+  "teachers": [
+    {
+      "code": "T21",
+      "full_name": "دکتر ناصر امینی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 14,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T22",
+      "full_name": "دکتر شیوا رستمی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 14,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T23",
+      "full_name": "دکتر کامران یزدانی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T24",
+      "full_name": "دکتر لیلا فرهادی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T25",
+      "full_name": "مهندس سعید جعفری",
+      "gender": 1,
+      "degree": 2,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "شنبه"
+      ]
+    },
+    {
+      "code": "T26",
+      "full_name": "دکتر پریسا نوری",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    }
+  ],
+  "courses": [
+    {
+      "code": "C301",
+      "name": "ریاضی مهندسی",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 85,
+      "teachers": [
+        "T21",
+        "T26"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C302",
+      "name": "کنترل خطی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 42,
+      "teachers": [
+        "T22"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C303",
+      "name": "آزمایشگاه کنترل خطی",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": "L401",
+      "expected_students": 18,
+      "teachers": [
+        "T22",
+        "T24"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C304",
+      "name": "الکترونیک ۱",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 44,
+      "teachers": [
+        "T23"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C305",
+      "name": "آزمایشگاه الکترونیک ۱",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": "L402",
+      "expected_students": 20,
+      "teachers": [
+        "T23",
+        "T25"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C306",
+      "name": "کارگاه ماشین‌ابزار",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کارگاه",
+      "required_place": null,
+      "expected_students": 16,
+      "teachers": [
+        "T25"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C307",
+      "name": "مقاومت مصالح",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 40,
+      "teachers": [
+        "T24"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C308",
+      "name": "ترمودینامیک",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 28,
+      "teachers": [
+        "T26"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C309",
+      "name": "آزمایشگاه فیزیک پیشرفته",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 20,
+      "teachers": [
+        "T21",
+        "T23"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C310",
+      "name": "اصول مهندسی برق",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 28,
+      "teachers": [
+        "T22",
+        "T23"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    }
+  ],
+  "student_groups": [
+    {
+      "name": "مکانیک ورودی ۱۴۰۳",
+      "size": 40,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی مکانیک",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C301",
+        "C306",
+        "C307"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "برق ورودی ۱۴۰۳",
+      "size": 44,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی برق",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C304",
+        "C305",
+        "C310"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "برق ورودی ۱۴۰۲",
+      "size": 42,
+      "entry_year": 1402,
+      "field_of_study": "مهندسی برق",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C302",
+        "C303",
+        "C308",
+        "C309"
+      ],
+      "optional_courses": []
+    }
+  ],
+  "constraints": [
+    {
+      "type": "place_unavailable",
+      "parameters": {
+        "place_code": "L401",
+        "day": "چهارشنبه",
+        "slot_id": null
+      },
+      "description": "آزمایشگاه کنترل چهارشنبه‌ها برای تعمیرات تعطیل است"
+    },
+    {
+      "type": "place_unavailable",
+      "parameters": {
+        "place_code": "W501",
+        "day": "شنبه",
+        "slot_id": null
+      },
+      "description": "کارگاه ماشین‌ابزار شنبه‌ها در اختیار دوره‌های آزاد است"
+    },
+    {
+      "type": "place_unavailable",
+      "parameters": {
+        "place_code": "R301",
+        "day": "سه‌شنبه",
+        "slot_id": 1
+      },
+      "description": "آمفی‌تئاتر سه‌شنبه صبح برای مراسم دانشکده رزرو است"
+    }
+  ],
+  "stats": {
+    "teachers": 6,
+    "places": 6,
+    "courses": 10,
+    "student_groups": 3,
+    "constraints": 3,
+    "total_units": 23,
+    "sessions": 23,
+    "days": 5,
+    "slots_per_day": 4,
+    "timetable_cells": 20,
+    "capacity_cells": 120,
+    "load_factor": 0.192
+  },
+  "target": {
+    "cost": 0.0,
+    "entries": [
+      {
+        "course_code": "C301",
+        "course_name": "ریاضی مهندسی",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T26",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C301",
+        "course_name": "ریاضی مهندسی",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T26",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C301",
+        "course_name": "ریاضی مهندسی",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T21",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C302",
+        "course_name": "کنترل خطی",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T22",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C302",
+        "course_name": "کنترل خطی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T22",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C302",
+        "course_name": "کنترل خطی",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T22",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C303",
+        "course_name": "آزمایشگاه کنترل خطی",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T24",
+        "place_code": "L401"
+      },
+      {
+        "course_code": "C304",
+        "course_name": "الکترونیک ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T23",
+        "place_code": "R302"
+      },
+      {
+        "course_code": "C304",
+        "course_name": "الکترونیک ۱",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T23",
+        "place_code": "R302"
+      },
+      {
+        "course_code": "C304",
+        "course_name": "الکترونیک ۱",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T23",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C305",
+        "course_name": "آزمایشگاه الکترونیک ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T23",
+        "place_code": "L402"
+      },
+      {
+        "course_code": "C306",
+        "course_name": "کارگاه ماشین‌ابزار",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T25",
+        "place_code": "W501"
+      },
+      {
+        "course_code": "C306",
+        "course_name": "کارگاه ماشین‌ابزار",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T25",
+        "place_code": "W501"
+      },
+      {
+        "course_code": "C307",
+        "course_name": "مقاومت مصالح",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T24",
+        "place_code": "R302"
+      },
+      {
+        "course_code": "C307",
+        "course_name": "مقاومت مصالح",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T24",
+        "place_code": "R302"
+      },
+      {
+        "course_code": "C307",
+        "course_name": "مقاومت مصالح",
+        "session_index": 2,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T24",
+        "place_code": "R302"
+      },
+      {
+        "course_code": "C308",
+        "course_name": "ترمودینامیک",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T26",
+        "place_code": "R303"
+      },
+      {
+        "course_code": "C308",
+        "course_name": "ترمودینامیک",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T26",
+        "place_code": "R303"
+      },
+      {
+        "course_code": "C308",
+        "course_name": "ترمودینامیک",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T26",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C309",
+        "course_name": "آزمایشگاه فیزیک پیشرفته",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T23",
+        "place_code": "L401"
+      },
+      {
+        "course_code": "C309",
+        "course_name": "آزمایشگاه فیزیک پیشرفته",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T23",
+        "place_code": "L402"
+      },
+      {
+        "course_code": "C310",
+        "course_name": "اصول مهندسی برق",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T22",
+        "place_code": "R301"
+      },
+      {
+        "course_code": "C310",
+        "course_name": "اصول مهندسی برق",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T23",
+        "place_code": "R302"
+      }
+    ],
+    "satisfied_time_preferences": 0,
+    "total_time_preferences": 0,
+    "generated_by": "scheduling_module.benchmarks.solver.TargetSolver (backtracking)",
+    "validated_with": "HybridBBO_RL_Scheduler._fitness"
+  }
+}

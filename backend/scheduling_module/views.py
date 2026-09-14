@@ -573,6 +573,7 @@ class SchedulingTaskViewSet(viewsets.ModelViewSet):
             'result': task.result,
             'has_schedule_result': has_result,
             'approval_status': getattr(task.schedule_result, 'approval_status', None) if has_result else None,
+            'benchmark_key': task.university_config.benchmark_key,
         }
 
         if has_result:
@@ -703,6 +704,63 @@ class SchedulingTaskViewSet(viewsets.ModelViewSet):
         response = HttpResponse(content, content_type='application/json; charset=utf-8')
         response['Content-Disposition'] = f'attachment; filename="{filename_base}.json"'
         return response
+
+    @action(detail=True, methods=['get'])
+    def compare(self, request, pk=None):
+        """
+        مقایسه‌ی خروجی این اجرا با «پاسخ مرجع» (ground truth) مجموعه‌ی داده‌ی آزمون.
+
+        کلید مجموعه از روی نیمسالِ همین وظیفه خوانده می‌شود (benchmark_key)؛
+        با پارامتر ?seed_key= هم می‌توان صریحاً مشخصش کرد (مثلاً وقتی داده به‌صورت
+        دستی وارد شده ولی می‌خواهیم با یک مجموعه‌ی مشخص سنجیده شود).
+        """
+        from .benchmarks import get_seed
+        from .benchmarks.comparison import compare_with_target
+
+        task = self.get_object()
+
+        seed_key = request.query_params.get('seed_key') or task.university_config.benchmark_key
+        if not seed_key:
+            return Response({
+                'success': False,
+                'message': 'این نیمسال از داده‌های آزمون ساخته نشده است، بنابراین پاسخ مرجعی برای مقایسه ندارد'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        seed = get_seed(seed_key)
+        if not seed:
+            return Response({
+                'success': False,
+                'message': f'مجموعه‌ی داده‌ی آزمون «{seed_key}» یافت نشد'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        if not hasattr(task, 'schedule_result'):
+            return Response({
+                'success': False,
+                'message': 'برای این وظیفه هنوز نتیجه‌ای تولید نشده است؛ ابتدا الگوریتم را اجرا کنید'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        produced = (task.schedule_result.schedule_data or {}).get('courses') or []
+        if not produced:
+            return Response({
+                'success': False,
+                'message': 'نتیجه‌ی این اجرا هیچ جلسه‌ای ندارد'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            comparison = compare_with_target(seed, produced)
+        except Exception as exc:  # noqa: BLE001
+            logger.exception('خطا در مقایسه با پاسخ مرجع')
+            return Response({'success': False, 'message': f'خطا در مقایسه: {exc}'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        comparison['task'] = {
+            'id': task.id,
+            'name': task.name,
+            'execution_time': task.execution_time,
+            'stored_cost': task.schedule_result.total_cost,
+            'generations_run': (task.schedule_result.schedule_data or {}).get('generations_run'),
+        }
+        return Response({'success': True, 'comparison': comparison})
 
 
 # ============================================================================
@@ -1369,3 +1427,122 @@ def api_university_stats(request, university_id):
             'success': False,
             'message': f'خطا در دریافت آمار: {str(e)}'
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# ============================================================================
+# مجموعه‌های داده‌ی آزمون (Benchmark Seeds) و مقایسه با پاسخ مرجع
+# ============================================================================
+
+class BenchmarkSeedListAPIView(APIView):
+    """
+    فهرست مجموعه‌های داده‌ی آزمون به‌همراه خلاصه‌ی آماری هرکدام.
+    خودِ داده‌ها و پاسخ مرجع در این پاسخ نیست (حجیم است)؛ برای آن‌ها از
+    endpoint جزئیات استفاده کنید.
+    """
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        from .benchmarks import load_all_seeds, seed_summary
+
+        seeds = load_all_seeds()
+
+        # سوپروایزر دانشگاه ثابتی ندارد؛ در فضای کاری یک دانشگاه، شناسه‌ی آن را
+        # صریحاً می‌فرستد تا «قبلاً بارگذاری شده» درست محاسبه شود.
+        university_id = request.user.university_id
+        if request.user.role == 'supervisor':
+            university_id = request.query_params.get('university_id') or None
+
+        loaded = {}
+        if university_id:
+            loaded = {
+                uc.benchmark_key: {'id': uc.id, 'name': uc.name}
+                for uc in UniversityConfig.objects.filter(
+                    university_id=university_id
+                ).exclude(benchmark_key='').order_by('id')
+            }
+
+        results = []
+        for seed in seeds:
+            summary = seed_summary(seed)
+            summary['target_cost'] = seed['target']['cost']
+            summary['target_sessions'] = len(seed['target']['entries'])
+            summary['loaded_config'] = loaded.get(seed['key'])
+            results.append(summary)
+
+        return Response({'success': True, 'count': len(results), 'results': results})
+
+
+class BenchmarkSeedDetailAPIView(APIView):
+    """
+    جزئیات کامل یک مجموعه‌ی آزمون: داده‌های ورودی (برای نمایش به کاربر پیش از
+    اجرا) و پاسخ مرجع (برای نمایش «جواب درست»).
+    """
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, seed_key):
+        from .benchmarks import get_seed
+
+        seed = get_seed(seed_key)
+        if not seed:
+            return Response({'success': False, 'message': 'مجموعه‌ی داده‌ی آزمون یافت نشد'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        return Response({'success': True, 'seed': seed})
+
+
+class BenchmarkSeedLoadAPIView(APIView):
+    """
+    بارگذاری یک مجموعه‌ی آزمون در پایگاه‌داده: یک نیمسال کامل با همه‌ی اساتید،
+    دروس، مکان‌ها، گروه‌ها و محدودیت‌ها ساخته می‌شود.
+
+    اختیاری: با create_task=true یک وظیفه‌ی زمان‌بندی آماده‌ی اجرا هم ساخته می‌شود.
+    """
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, CanRunScheduling]
+
+    def post(self, request, seed_key):
+        from .benchmarks.db_loader import SeedLoadError, load_seed_into_db
+
+        university = request.user.university
+        if request.user.role == 'supervisor' and request.data.get('university_id'):
+            from account_module.models import University
+            university = University.objects.filter(
+                id=request.data.get('university_id')
+            ).first()
+
+        try:
+            config, counts = load_seed_into_db(
+                seed_key,
+                user=request.user,
+                university=university,
+                config_name=request.data.get('config_name'),
+            )
+        except SeedLoadError as exc:
+            return Response({'success': False, 'message': str(exc)},
+                            status=status.HTTP_400_BAD_REQUEST)
+        except Exception as exc:  # noqa: BLE001
+            logger.exception('خطا در بارگذاری داده‌ی آزمون')
+            return Response({'success': False, 'message': f'خطا در بارگذاری داده: {exc}'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        task_id = None
+        if str(request.data.get('create_task', 'true')).lower() in ('true', '1', 'yes'):
+            task = SchedulingTask.objects.create(
+                created_by=request.user,
+                name=f'اجرای آزمون — {config.name}',
+                description='اجرای الگوریتم روی داده‌ی آزمون برای مقایسه با پاسخ مرجع',
+                university_config=config,
+                algorithm_params=request.data.get('algorithm_params') or {},
+            )
+            task_id = task.id
+
+        return Response({
+            'success': True,
+            'message': f'داده‌های آزمون در نیمسال «{config.name}» بارگذاری شد',
+            'university_config_id': config.id,
+            'university_config_name': config.name,
+            'benchmark_key': config.benchmark_key,
+            'counts': counts,
+            'task_id': task_id,
+        }, status=status.HTTP_201_CREATED)

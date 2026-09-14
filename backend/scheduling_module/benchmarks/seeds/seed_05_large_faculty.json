@@ -1,0 +1,1551 @@
+{
+  "key": "seed_05_large_faculty",
+  "title": "دانشکده بزرگ چندرشته‌ای — نیمسال کامل",
+  "difficulty": "very_hard",
+  "difficulty_label": "خیلی دشوار",
+  "description": "بزرگ‌ترین مجموعه: ۱۴ استاد، ۱۰ مکان، ۲۴ درس و ۶ گروه دانشجویی — در مجموع حدود ۵۵ جلسه‌ی هفتگی که باید در ۲۵ بازه‌ی زمانی (۵ روز × ۵ بازه) چیده شوند. ترکیب همه‌ی انواع محدودیت‌ها با هم. هدف اصلی این مجموعه سنجش مقیاس‌پذیری و کیفیت هم‌گرایی الگوریتم است؛ رسیدن به هزینه‌ی صفر در آن دشوار ولی ممکن است (پاسخ مرجع وجود دارد و اعتبارسنجی شده است).",
+  "settings": {
+    "name": "بنچمارک ۵ — دانشکده بزرگ",
+    "semester": "نیمسال اول ۱۴۰۴-۱۴۰۵",
+    "days_of_week": [
+      {
+        "id": 0,
+        "name": "شنبه",
+        "enabled": true
+      },
+      {
+        "id": 1,
+        "name": "یکشنبه",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "name": "دوشنبه",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "name": "سه‌شنبه",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "name": "چهارشنبه",
+        "enabled": true
+      }
+    ],
+    "time_slots": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "enabled": true
+      },
+      {
+        "id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "enabled": true
+      }
+    ],
+    "max_units_per_student": 22,
+    "max_classes_per_day": 4
+  },
+  "places": [
+    {
+      "code": "A001",
+      "name": "آمفی‌تئاتر مرکزی",
+      "capacity": 120,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "A002",
+      "name": "سالن اجتماعات",
+      "capacity": 80,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "C201",
+      "name": "کلاس ۲۰۱",
+      "capacity": 60,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "C202",
+      "name": "کلاس ۲۰۲",
+      "capacity": 55,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "C203",
+      "name": "کلاس ۲۰۳",
+      "capacity": 50,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "C204",
+      "name": "کلاس ۲۰۴",
+      "capacity": 45,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "C205",
+      "name": "کلاس ۲۰۵",
+      "capacity": 40,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "LB01",
+      "name": "آزمایشگاه شیمی",
+      "capacity": 24,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "LB02",
+      "name": "سایت مرکزی",
+      "capacity": 32,
+      "place_type": "آزمایشگاه",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "WK01",
+      "name": "کارگاه جوشکاری",
+      "capacity": 20,
+      "place_type": "کارگاه",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    }
+  ],
+  "teachers": [
+    {
+      "code": "P01",
+      "full_name": "دکتر آرش تهرانی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 16,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P02",
+      "full_name": "دکتر مینا سلیمی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 16,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P03",
+      "full_name": "دکتر بابک وحدت",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "پنجشنبه",
+        "چهارشنبه-5"
+      ]
+    },
+    {
+      "code": "P04",
+      "full_name": "دکتر رویا اسدی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P05",
+      "full_name": "دکتر فرهاد کیانی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P06",
+      "full_name": "دکتر ندا شفیعی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "شنبه-1"
+      ]
+    },
+    {
+      "code": "P07",
+      "full_name": "دکتر سیاوش رادمنش",
+      "gender": 1,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P08",
+      "full_name": "دکتر آزاده مهرابی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P09",
+      "full_name": "دکتر کیوان بهرامی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P10",
+      "full_name": "دکتر شبنم علوی",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P11",
+      "full_name": "مهندس رامین ذاکری",
+      "gender": 1,
+      "degree": 2,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "یکشنبه",
+        "سه‌شنبه"
+      ]
+    },
+    {
+      "code": "P12",
+      "full_name": "مهندس هستی گلستانی",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "دوشنبه"
+      ]
+    },
+    {
+      "code": "P13",
+      "full_name": "دکتر مسعود پارسا",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "P14",
+      "full_name": "دکتر گلناز صابری",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    }
+  ],
+  "courses": [
+    {
+      "code": "E101",
+      "name": "ریاضی عمومی ۱",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 110,
+      "teachers": [
+        "P01",
+        "P04"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E102",
+      "name": "ریاضی عمومی ۲",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 95,
+      "teachers": [
+        "P01"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E103",
+      "name": "فیزیک ۱",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 100,
+      "teachers": [
+        "P02"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E104",
+      "name": "فیزیک ۲",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 78,
+      "teachers": [
+        "P02",
+        "P05"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E105",
+      "name": "شیمی عمومی",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 58,
+      "teachers": [
+        "P06"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E106",
+      "name": "آزمایشگاه شیمی",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 22,
+      "teachers": [
+        "P06",
+        "P12"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E107",
+      "name": "برنامه‌نویسی پیشرفته",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 55,
+      "teachers": [
+        "P03"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E108",
+      "name": "کارگاه برنامه‌نویسی",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "آزمایشگاه",
+      "required_place": null,
+      "expected_students": 30,
+      "teachers": [
+        "P03",
+        "P11"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E109",
+      "name": "مدارهای الکتریکی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 52,
+      "teachers": [
+        "P05"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E110",
+      "name": "ماشین‌های الکتریکی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 48,
+      "teachers": [
+        "P09"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E111",
+      "name": "استاتیک",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 50,
+      "teachers": [
+        "P07"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E112",
+      "name": "دینامیک",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 44,
+      "teachers": [
+        "P07",
+        "P13"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E113",
+      "name": "کارگاه جوشکاری",
+      "course_type": "عملی",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کارگاه",
+      "required_place": null,
+      "expected_students": 18,
+      "teachers": [
+        "P11"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E114",
+      "name": "مبانی مدیریت",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 62,
+      "teachers": [
+        "P08"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E115",
+      "name": "حسابداری صنعتی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 45,
+      "teachers": [
+        "P08",
+        "P10"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E116",
+      "name": "تحقیق در عملیات",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 42,
+      "teachers": [
+        "P10"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E117",
+      "name": "کنترل کیفیت آماری",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 40,
+      "teachers": [
+        "P14"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E118",
+      "name": "اقتصاد خرد",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 58,
+      "teachers": [
+        "P14",
+        "P08"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E119",
+      "name": "زبان انگلیسی عمومی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 75,
+      "teachers": [
+        "P04"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E120",
+      "name": "زبان تخصصی مهندسی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 38,
+      "teachers": [
+        "P12"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E121",
+      "name": "اندیشه اسلامی ۱",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 90,
+      "teachers": [
+        "P13"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E122",
+      "name": "تاریخ تحلیلی اسلام",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 70,
+      "teachers": [
+        "P13",
+        "P09"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E123",
+      "name": "روش تحقیق",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 36,
+      "teachers": [
+        "P09"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "E124",
+      "name": "پروژه کارشناسی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 1,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 25,
+      "teachers": [
+        "P01",
+        "P05",
+        "P10"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    }
+  ],
+  "student_groups": [
+    {
+      "name": "کامپیوتر ۱۴۰۴",
+      "size": 55,
+      "entry_year": 1404,
+      "field_of_study": "مهندسی کامپیوتر",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E101",
+        "E103",
+        "E107",
+        "E108"
+      ],
+      "optional_courses": [
+        "E119"
+      ]
+    },
+    {
+      "name": "کامپیوتر ۱۴۰۳",
+      "size": 50,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی کامپیوتر",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E102",
+        "E104",
+        "E120",
+        "E123"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "برق ۱۴۰۴",
+      "size": 52,
+      "entry_year": 1404,
+      "field_of_study": "مهندسی برق",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E101",
+        "E109",
+        "E121"
+      ],
+      "optional_courses": [
+        "E119"
+      ]
+    },
+    {
+      "name": "برق ۱۴۰۳",
+      "size": 48,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی برق",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E110",
+        "E104",
+        "E122"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "مکانیک ۱۴۰۴",
+      "size": 50,
+      "entry_year": 1404,
+      "field_of_study": "مهندسی مکانیک",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E105",
+        "E106",
+        "E111",
+        "E113"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "صنایع ۱۴۰۳",
+      "size": 45,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی صنایع",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "E112",
+        "E114",
+        "E115",
+        "E116",
+        "E117"
+      ],
+      "optional_courses": [
+        "E118",
+        "E124"
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "place_unavailable",
+      "parameters": {
+        "place_code": "A001",
+        "day": "پنجشنبه",
+        "slot_id": null
+      },
+      "description": "آمفی‌تئاتر مرکزی پنجشنبه‌ها در اختیار همایش‌هاست"
+    },
+    {
+      "type": "place_unavailable",
+      "parameters": {
+        "place_code": "LB01",
+        "day": "شنبه",
+        "slot_id": 5
+      },
+      "description": "آزمایشگاه شیمی شنبه بازه آخر تعطیل است"
+    },
+    {
+      "type": "time_preference",
+      "parameters": {
+        "teacher_code": "P01",
+        "day": "شنبه",
+        "slot_id": 2,
+        "weight": 2
+      },
+      "description": "دکتر تهرانی ترجیح می‌دهد شنبه بازه دوم تدریس کند"
+    },
+    {
+      "type": "time_preference",
+      "parameters": {
+        "teacher_code": "P10",
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "weight": 1
+      },
+      "description": "دکتر علوی ترجیح می‌دهد دوشنبه بعدازظهر تدریس کند"
+    }
+  ],
+  "stats": {
+    "teachers": 14,
+    "places": 10,
+    "courses": 24,
+    "student_groups": 6,
+    "constraints": 4,
+    "total_units": 56,
+    "sessions": 56,
+    "days": 5,
+    "slots_per_day": 5,
+    "timetable_cells": 25,
+    "capacity_cells": 250,
+    "load_factor": 0.224
+  },
+  "target": {
+    "cost": 0.0,
+    "entries": [
+      {
+        "course_code": "E101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P01",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P04",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E101",
+        "course_name": "ریاضی عمومی ۱",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P04",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E102",
+        "course_name": "ریاضی عمومی ۲",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P01",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E102",
+        "course_name": "ریاضی عمومی ۲",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P01",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E102",
+        "course_name": "ریاضی عمومی ۲",
+        "session_index": 2,
+        "day": "سه‌شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P01",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E103",
+        "course_name": "فیزیک ۱",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P02",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E103",
+        "course_name": "فیزیک ۱",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P02",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E103",
+        "course_name": "فیزیک ۱",
+        "session_index": 2,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P02",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E104",
+        "course_name": "فیزیک ۲",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P05",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E104",
+        "course_name": "فیزیک ۲",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P05",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E104",
+        "course_name": "فیزیک ۲",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P05",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E105",
+        "course_name": "شیمی عمومی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P06",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E105",
+        "course_name": "شیمی عمومی",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P06",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E106",
+        "course_name": "آزمایشگاه شیمی",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P06",
+        "place_code": "LB02"
+      },
+      {
+        "course_code": "E107",
+        "course_name": "برنامه‌نویسی پیشرفته",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P03",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E107",
+        "course_name": "برنامه‌نویسی پیشرفته",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P03",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E107",
+        "course_name": "برنامه‌نویسی پیشرفته",
+        "session_index": 2,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P03",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E108",
+        "course_name": "کارگاه برنامه‌نویسی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P11",
+        "place_code": "LB02"
+      },
+      {
+        "course_code": "E109",
+        "course_name": "مدارهای الکتریکی",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P05",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E109",
+        "course_name": "مدارهای الکتریکی",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P05",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E109",
+        "course_name": "مدارهای الکتریکی",
+        "session_index": 2,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P05",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E110",
+        "course_name": "ماشین‌های الکتریکی",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P09",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E110",
+        "course_name": "ماشین‌های الکتریکی",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P09",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E110",
+        "course_name": "ماشین‌های الکتریکی",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P09",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E111",
+        "course_name": "استاتیک",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P07",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E111",
+        "course_name": "استاتیک",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P07",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E111",
+        "course_name": "استاتیک",
+        "session_index": 2,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P07",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E112",
+        "course_name": "دینامیک",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P07",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E112",
+        "course_name": "دینامیک",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P13",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E112",
+        "course_name": "دینامیک",
+        "session_index": 2,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P13",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E113",
+        "course_name": "کارگاه جوشکاری",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P11",
+        "place_code": "WK01"
+      },
+      {
+        "course_code": "E113",
+        "course_name": "کارگاه جوشکاری",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P11",
+        "place_code": "WK01"
+      },
+      {
+        "course_code": "E114",
+        "course_name": "مبانی مدیریت",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P08",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E114",
+        "course_name": "مبانی مدیریت",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P08",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E115",
+        "course_name": "حسابداری صنعتی",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P10",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E115",
+        "course_name": "حسابداری صنعتی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P10",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E115",
+        "course_name": "حسابداری صنعتی",
+        "session_index": 2,
+        "day": "دوشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P08",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E116",
+        "course_name": "تحقیق در عملیات",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P10",
+        "place_code": "C202"
+      },
+      {
+        "course_code": "E116",
+        "course_name": "تحقیق در عملیات",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "P10",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E116",
+        "course_name": "تحقیق در عملیات",
+        "session_index": 2,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P10",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E117",
+        "course_name": "کنترل کیفیت آماری",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P14",
+        "place_code": "C205"
+      },
+      {
+        "course_code": "E117",
+        "course_name": "کنترل کیفیت آماری",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P14",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E118",
+        "course_name": "اقتصاد خرد",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P14",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E118",
+        "course_name": "اقتصاد خرد",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P08",
+        "place_code": "C201"
+      },
+      {
+        "course_code": "E119",
+        "course_name": "زبان انگلیسی عمومی",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P04",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E119",
+        "course_name": "زبان انگلیسی عمومی",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P04",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E120",
+        "course_name": "زبان تخصصی مهندسی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P12",
+        "place_code": "C204"
+      },
+      {
+        "course_code": "E120",
+        "course_name": "زبان تخصصی مهندسی",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P12",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E121",
+        "course_name": "اندیشه اسلامی ۱",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P13",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E121",
+        "course_name": "اندیشه اسلامی ۱",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P13",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E122",
+        "course_name": "تاریخ تحلیلی اسلام",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "P13",
+        "place_code": "A001"
+      },
+      {
+        "course_code": "E122",
+        "course_name": "تاریخ تحلیلی اسلام",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "P13",
+        "place_code": "A002"
+      },
+      {
+        "course_code": "E123",
+        "course_name": "روش تحقیق",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P09",
+        "place_code": "C205"
+      },
+      {
+        "course_code": "E123",
+        "course_name": "روش تحقیق",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 5,
+        "start": "17:30",
+        "end": "19:30",
+        "teacher_code": "P09",
+        "place_code": "C205"
+      },
+      {
+        "course_code": "E124",
+        "course_name": "پروژه کارشناسی",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "P05",
+        "place_code": "C204"
+      }
+    ],
+    "satisfied_time_preferences": 2,
+    "total_time_preferences": 2,
+    "generated_by": "scheduling_module.benchmarks.solver.TargetSolver (backtracking)",
+    "validated_with": "HybridBBO_RL_Scheduler._fitness"
+  }
+}

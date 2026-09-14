@@ -306,7 +306,10 @@ class SchedulingTaskSerializer(serializers.ModelSerializer):
     created_by_name = serializers.CharField(source='created_by.get_full_name', read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     university_name = serializers.CharField(source='university_config.name', read_only=True)
-    
+    # اگر نیمسال این وظیفه از یک مجموعه‌ی داده‌ی آزمون ساخته شده باشد، رابط کاربری
+    # با همین فیلد تشخیص می‌دهد که «مقایسه با پاسخ مرجع» برای آن معنا دارد
+    benchmark_key = serializers.CharField(source='university_config.benchmark_key', read_only=True)
+
     class Meta:
         model = SchedulingTask
         fields = [
@@ -314,7 +317,7 @@ class SchedulingTaskSerializer(serializers.ModelSerializer):
             'config_file', 'status', 'status_display', 'result',
             'algorithm_params', 'created_at', 'completed_at',
             'execution_time', 'is_public', 'description',
-            'university_config', 'university_name'
+            'university_config', 'university_name', 'benchmark_key'
         ]
         read_only_fields = ['created_by', 'created_at', 'completed_at', 'execution_time']
 

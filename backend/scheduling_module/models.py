@@ -30,6 +30,15 @@ class UniversityConfig(models.Model):
     time_slots = models.JSONField(default=list, verbose_name='بازه‌های زمانی')
     max_units_per_student = models.IntegerField(default=20, verbose_name='حداکثر واحد هر دانشجو')
     max_classes_per_day = models.IntegerField(default=3, verbose_name='حداکثر کلاس در روز')
+
+    # اگر این نیمسال از یک «مجموعه‌ی داده‌ی آزمون» ساخته شده باشد، کلید آن اینجا
+    # نگه داشته می‌شود تا خروجی زمان‌بندی بتواند خودکار با پاسخ مرجع مقایسه شود.
+    benchmark_key = models.CharField(
+        max_length=100, blank=True, default='',
+        verbose_name='کلید مجموعه‌ی آزمون',
+        help_text='برای نیمسال‌هایی که از داده‌های آزمون (benchmark seed) ساخته شده‌اند'
+    )
+
     created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='ایجاد کننده')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

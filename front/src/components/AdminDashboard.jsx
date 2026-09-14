@@ -10,6 +10,7 @@ import StudentGroupsManage from './StudentGroupsManage';
 import UsersManage from './UsersManage';
 import SemestersManage from './SemestersManage';
 import SchedulingRun from './SchedulingRun';
+import BenchmarkSeeds from './BenchmarkSeeds';
 import ReportsView from './ReportsView';
 
 const TABS = [
@@ -20,6 +21,7 @@ const TABS = [
   { id: 'places', label: 'مکان‌ها' },
   { id: 'groups', label: 'گروه‌های دانشجویی' },
   { id: 'scheduling', label: 'زمان‌بندی هوشمند' },
+  { id: 'benchmarks', label: 'داده‌های آزمون' },
   { id: 'reports', label: 'گزارشات' },
   { id: 'users', label: 'کاربران' },
 ];
@@ -131,6 +133,16 @@ export default function AdminDashboard() {
         {activeTab === 'places' && <PlacesManage />}
         {activeTab === 'groups' && <StudentGroupsManage />}
         {activeTab === 'scheduling' && <SchedulingRun />}
+        {activeTab === 'benchmarks' && (
+          <BenchmarkSeeds
+            onSeedLoaded={(data) => {
+              // نیمسال تازه بارگذاری‌شده فعال شده است؛ نوار بالای داشبورد باید
+              // همان را نشان دهد و کاربر مستقیم به تب زمان‌بندی هدایت شود
+              setActiveSemesterId(String(data.university_config_id));
+              setActiveTab('scheduling');
+            }}
+          />
+        )}
         {activeTab === 'reports' && <ReportsView />}
 
         {activeTab === 'users' && <UsersManage isSupervisorView={false} />}

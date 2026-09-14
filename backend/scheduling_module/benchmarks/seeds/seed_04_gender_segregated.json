@@ -1,0 +1,830 @@
+{
+  "key": "seed_04_gender_segregated",
+  "title": "دانشکده با تفکیک جنسیتی — نیمسال دوم",
+  "difficulty": "hard",
+  "difficulty_label": "دشوار",
+  "description": "این مجموعه هر سه محدودیت «نرم و سختِ» کمتر آزمایش‌شده را هم‌زمان فعال می‌کند: دروس و مکان‌های تفکیک‌شده بر اساس جنسیت (خواهران/برادران)، جدول عدم‌دسترسی دقیق اساتید در سطح «روز-بازه» و سه محدودیت ترجیح زمانی (time_preference) که برخلاف بقیه، پاداش است نه جریمه. پاسخ مرجع همه‌ی ترجیح‌ها را رعایت می‌کند.",
+  "settings": {
+    "name": "بنچمارک ۴ — تفکیک جنسیتی",
+    "semester": "نیمسال دوم ۱۴۰۴-۱۴۰۵",
+    "days_of_week": [
+      {
+        "id": 0,
+        "name": "شنبه",
+        "enabled": true
+      },
+      {
+        "id": 1,
+        "name": "یکشنبه",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "name": "دوشنبه",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "name": "سه‌شنبه",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "name": "چهارشنبه",
+        "enabled": true
+      }
+    ],
+    "time_slots": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "enabled": true
+      },
+      {
+        "id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "enabled": true
+      },
+      {
+        "id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "enabled": true
+      },
+      {
+        "id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "enabled": true
+      }
+    ],
+    "max_units_per_student": 20,
+    "max_classes_per_day": 3
+  },
+  "places": [
+    {
+      "code": "B101",
+      "name": "کلاس برادران ۱",
+      "capacity": 50,
+      "place_type": "کلاس تئوری",
+      "gender": 1,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "B102",
+      "name": "کلاس برادران ۲",
+      "capacity": 40,
+      "place_type": "کلاس تئوری",
+      "gender": 1,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "S101",
+      "name": "کلاس خواهران ۱",
+      "capacity": 50,
+      "place_type": "کلاس تئوری",
+      "gender": 2,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "S102",
+      "name": "کلاس خواهران ۲",
+      "capacity": 40,
+      "place_type": "کلاس تئوری",
+      "gender": 2,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "G001",
+      "name": "کلاس عمومی ۱",
+      "capacity": 60,
+      "place_type": "کلاس تئوری",
+      "gender": 0,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "GYMB",
+      "name": "سالن ورزشی برادران",
+      "capacity": 40,
+      "place_type": "سالن ورزشی",
+      "gender": 1,
+      "facilities": [],
+      "available": true
+    },
+    {
+      "code": "GYMS",
+      "name": "سالن ورزشی خواهران",
+      "capacity": 40,
+      "place_type": "سالن ورزشی",
+      "gender": 2,
+      "facilities": [],
+      "available": true
+    }
+  ],
+  "teachers": [
+    {
+      "code": "T31",
+      "full_name": "دکتر مهدی سلطانی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "شنبه-1",
+        "شنبه-2"
+      ]
+    },
+    {
+      "code": "T32",
+      "full_name": "دکتر الهام باقری",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "چهارشنبه"
+      ]
+    },
+    {
+      "code": "T33",
+      "full_name": "دکتر یاسر عبدی",
+      "gender": 1,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T34",
+      "full_name": "دکتر سمیرا اکبری",
+      "gender": 2,
+      "degree": 3,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": [
+        "یکشنبه-4",
+        "دوشنبه-4"
+      ]
+    },
+    {
+      "code": "T35",
+      "full_name": "دکتر جواد مرادی",
+      "gender": 1,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T36",
+      "full_name": "دکتر نرگس طاهری",
+      "gender": 2,
+      "degree": 2,
+      "employment_type": 1,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T37",
+      "full_name": "مربی حامد زمانی",
+      "gender": 1,
+      "degree": 1,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    },
+    {
+      "code": "T38",
+      "full_name": "مربی مینا رحیمی",
+      "gender": 2,
+      "degree": 1,
+      "employment_type": 3,
+      "position": 1,
+      "max_units": 12,
+      "min_units": 4,
+      "unavailable_times": []
+    }
+  ],
+  "courses": [
+    {
+      "code": "C401",
+      "name": "معارف اسلامی — برادران",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 1,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 45,
+      "teachers": [
+        "T31"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C402",
+      "name": "معارف اسلامی — خواهران",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 2,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 45,
+      "teachers": [
+        "T32"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C403",
+      "name": "تربیت بدنی — برادران",
+      "course_type": "عملی",
+      "unit_type": "عمومی",
+      "units": 1,
+      "priority": 1,
+      "gender": 1,
+      "required_place_type": "سالن ورزشی",
+      "required_place": null,
+      "expected_students": 38,
+      "teachers": [
+        "T37"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C404",
+      "name": "تربیت بدنی — خواهران",
+      "course_type": "عملی",
+      "unit_type": "عمومی",
+      "units": 1,
+      "priority": 1,
+      "gender": 2,
+      "required_place_type": "سالن ورزشی",
+      "required_place": null,
+      "expected_students": 38,
+      "teachers": [
+        "T38"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C405",
+      "name": "ریاضی ۲",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 55,
+      "teachers": [
+        "T33",
+        "T35"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C406",
+      "name": "آمار و احتمال",
+      "course_type": "تئوری",
+      "unit_type": "پایه",
+      "units": 3,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 50,
+      "teachers": [
+        "T34"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C407",
+      "name": "اقتصاد مهندسی",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 44,
+      "teachers": [
+        "T35"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C408",
+      "name": "مدیریت پروژه",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 40,
+      "teachers": [
+        "T36"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C409",
+      "name": "روان‌شناسی صنعتی — خواهران",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 2,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 36,
+      "teachers": [
+        "T36"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C410",
+      "name": "روان‌شناسی صنعتی — برادران",
+      "course_type": "تئوری",
+      "unit_type": "تخصصی",
+      "units": 2,
+      "priority": 1,
+      "gender": 1,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 36,
+      "teachers": [
+        "T33"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C411",
+      "name": "زبان فارسی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 52,
+      "teachers": [
+        "T32",
+        "T34"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    },
+    {
+      "code": "C412",
+      "name": "اندیشه اسلامی",
+      "course_type": "تئوری",
+      "unit_type": "عمومی",
+      "units": 2,
+      "priority": 1,
+      "gender": 0,
+      "required_place_type": "کلاس تئوری",
+      "required_place": null,
+      "expected_students": 48,
+      "teachers": [
+        "T31"
+      ],
+      "prerequisites": [],
+      "corequisites": [],
+      "fixed": false
+    }
+  ],
+  "student_groups": [
+    {
+      "name": "عمومی برادران ۱۴۰۴",
+      "size": 45,
+      "entry_year": 1404,
+      "field_of_study": "عمومی",
+      "degree_level": "bachelor",
+      "gender": 1,
+      "required_courses": [
+        "C401",
+        "C403",
+        "C410"
+      ],
+      "optional_courses": [
+        "C412"
+      ]
+    },
+    {
+      "name": "عمومی خواهران ۱۴۰۴",
+      "size": 45,
+      "entry_year": 1404,
+      "field_of_study": "عمومی",
+      "degree_level": "bachelor",
+      "gender": 2,
+      "required_courses": [
+        "C402",
+        "C404",
+        "C409"
+      ],
+      "optional_courses": [
+        "C412"
+      ]
+    },
+    {
+      "name": "صنایع ورودی ۱۴۰۳",
+      "size": 50,
+      "entry_year": 1403,
+      "field_of_study": "مهندسی صنایع",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C405",
+        "C406",
+        "C407"
+      ],
+      "optional_courses": []
+    },
+    {
+      "name": "صنایع ورودی ۱۴۰۲",
+      "size": 44,
+      "entry_year": 1402,
+      "field_of_study": "مهندسی صنایع",
+      "degree_level": "bachelor",
+      "gender": 0,
+      "required_courses": [
+        "C408",
+        "C411",
+        "C412"
+      ],
+      "optional_courses": []
+    }
+  ],
+  "constraints": [
+    {
+      "type": "time_preference",
+      "parameters": {
+        "teacher_code": "T31",
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "weight": 2
+      },
+      "description": "دکتر سلطانی ترجیح می‌دهد دوشنبه بازه دوم تدریس کند"
+    },
+    {
+      "type": "time_preference",
+      "parameters": {
+        "teacher_code": "T34",
+        "day": "شنبه",
+        "slot_id": 1,
+        "weight": 1.5
+      },
+      "description": "دکتر اکبری ترجیح می‌دهد شنبه صبح زود کلاس داشته باشد"
+    },
+    {
+      "type": "time_preference",
+      "parameters": {
+        "teacher_code": "T36",
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "weight": 1
+      },
+      "description": "دکتر طاهری ترجیح می‌دهد سه‌شنبه بعدازظهر تدریس کند"
+    }
+  ],
+  "stats": {
+    "teachers": 8,
+    "places": 7,
+    "courses": 12,
+    "student_groups": 4,
+    "constraints": 3,
+    "total_units": 24,
+    "sessions": 24,
+    "days": 5,
+    "slots_per_day": 4,
+    "timetable_cells": 20,
+    "capacity_cells": 140,
+    "load_factor": 0.171
+  },
+  "target": {
+    "cost": 0.0,
+    "entries": [
+      {
+        "course_code": "C401",
+        "course_name": "معارف اسلامی — برادران",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T31",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C401",
+        "course_name": "معارف اسلامی — برادران",
+        "session_index": 1,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T31",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C402",
+        "course_name": "معارف اسلامی — خواهران",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T32",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C402",
+        "course_name": "معارف اسلامی — خواهران",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T32",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C403",
+        "course_name": "تربیت بدنی — برادران",
+        "session_index": 0,
+        "day": "دوشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T37",
+        "place_code": "GYMB"
+      },
+      {
+        "course_code": "C404",
+        "course_name": "تربیت بدنی — خواهران",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T38",
+        "place_code": "GYMS"
+      },
+      {
+        "course_code": "C405",
+        "course_name": "ریاضی ۲",
+        "session_index": 0,
+        "day": "یکشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T33",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C405",
+        "course_name": "ریاضی ۲",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T35",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C405",
+        "course_name": "ریاضی ۲",
+        "session_index": 2,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T33",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C406",
+        "course_name": "آمار و احتمال",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T34",
+        "place_code": "S101"
+      },
+      {
+        "course_code": "C406",
+        "course_name": "آمار و احتمال",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T34",
+        "place_code": "S101"
+      },
+      {
+        "course_code": "C406",
+        "course_name": "آمار و احتمال",
+        "session_index": 2,
+        "day": "چهارشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T34",
+        "place_code": "S101"
+      },
+      {
+        "course_code": "C407",
+        "course_name": "اقتصاد مهندسی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T35",
+        "place_code": "B101"
+      },
+      {
+        "course_code": "C407",
+        "course_name": "اقتصاد مهندسی",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T35",
+        "place_code": "B101"
+      },
+      {
+        "course_code": "C408",
+        "course_name": "مدیریت پروژه",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T36",
+        "place_code": "B101"
+      },
+      {
+        "course_code": "C408",
+        "course_name": "مدیریت پروژه",
+        "session_index": 1,
+        "day": "یکشنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T36",
+        "place_code": "S101"
+      },
+      {
+        "course_code": "C409",
+        "course_name": "روان‌شناسی صنعتی — خواهران",
+        "session_index": 0,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T36",
+        "place_code": "S102"
+      },
+      {
+        "course_code": "C409",
+        "course_name": "روان‌شناسی صنعتی — خواهران",
+        "session_index": 1,
+        "day": "شنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T36",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C410",
+        "course_name": "روان‌شناسی صنعتی — برادران",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T33",
+        "place_code": "B102"
+      },
+      {
+        "course_code": "C410",
+        "course_name": "روان‌شناسی صنعتی — برادران",
+        "session_index": 1,
+        "day": "سه‌شنبه",
+        "slot_id": 3,
+        "start": "13:30",
+        "end": "15:30",
+        "teacher_code": "T33",
+        "place_code": "B101"
+      },
+      {
+        "course_code": "C411",
+        "course_name": "زبان فارسی",
+        "session_index": 0,
+        "day": "شنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T34",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C411",
+        "course_name": "زبان فارسی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 1,
+        "start": "08:00",
+        "end": "10:00",
+        "teacher_code": "T32",
+        "place_code": "G001"
+      },
+      {
+        "course_code": "C412",
+        "course_name": "اندیشه اسلامی",
+        "session_index": 0,
+        "day": "چهارشنبه",
+        "slot_id": 2,
+        "start": "10:00",
+        "end": "12:00",
+        "teacher_code": "T31",
+        "place_code": "B101"
+      },
+      {
+        "course_code": "C412",
+        "course_name": "اندیشه اسلامی",
+        "session_index": 1,
+        "day": "دوشنبه",
+        "slot_id": 4,
+        "start": "15:30",
+        "end": "17:30",
+        "teacher_code": "T31",
+        "place_code": "S101"
+      }
+    ],
+    "satisfied_time_preferences": 3,
+    "total_time_preferences": 3,
+    "generated_by": "scheduling_module.benchmarks.solver.TargetSolver (backtracking)",
+    "validated_with": "HybridBBO_RL_Scheduler._fitness"
+  }
+}
