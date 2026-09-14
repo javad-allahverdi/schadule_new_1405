@@ -14,7 +14,7 @@ export default function Footer() {
         <img
           src={logo}
           alt="Company Logo"
-          className="w-20 h-20 mb-4 rounded-lg"
+          className="h-20 w-auto object-contain"
         />
         <h2 className="text-2xl font-secondary">
           شرکت هوشمند فناوران برتر ایرانیان
