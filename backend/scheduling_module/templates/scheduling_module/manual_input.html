@@ -217,38 +217,19 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">تعداد نسل‌ها</label>
-                                        {{ config_form.maxgen }}
+                                        <label class="form-label">بودجه ارزیابی جواب‌ها</label>
+                                        {{ config_form.max_evaluations }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label class="form-label">هزینه تداخل استاد</label>
-                                        {{ config_form.teacher_conflict_cost }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label class="form-label">هزینه تداخل مکان</label>
-                                        {{ config_form.place_conflict_cost }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label class="form-label">هزینه ظرفیت</label>
-                                        {{ config_form.capacity_cost }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label class="form-label">هزینه عدم تطابق جنسیت</label>
-                                        {{ config_form.gender_mismatch_cost }}
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">بذر تصادفی (اختیاری)</label>
+                                    {{ config_form.seed }}
                                 </div>
                             </div>
+                            {{ config_form.errors }}
 
                             <div class="alert alert-info">
                                 <i class="bi bi-info-circle"></i>

@@ -310,6 +310,13 @@ class SchedulingTaskSerializer(serializers.ModelSerializer):
     # با همین فیلد تشخیص می‌دهد که «مقایسه با پاسخ مرجع» برای آن معنا دارد
     benchmark_key = serializers.CharField(source='university_config.benchmark_key', read_only=True)
 
+    def validate_algorithm_params(self, value):
+        from scheduling.algorithm.coop0 import validate_parameters
+        try:
+            return validate_parameters(value)
+        except ValueError as exc:
+            raise serializers.ValidationError(str(exc)) from exc
+
     class Meta:
         model = SchedulingTask
         fields = [

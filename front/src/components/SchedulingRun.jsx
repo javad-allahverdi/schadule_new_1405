@@ -28,11 +28,8 @@ const emptyForm = {
   name: "",
   description: "",
   popsize: 40,
-  maxgen: 80,
-  teacher_conflict_cost: 100,
-  place_conflict_cost: 100,
-  capacity_cost: 50,
-  gender_mismatch_cost: 40,
+  max_evaluations: 3240,
+  seed: '',
 };
 
 export default function SchedulingRun() {
@@ -75,6 +72,15 @@ export default function SchedulingRun() {
       toast.error("نام وظیفه الزامی است");
       return;
     }
+    const population = Number(form.popsize);
+    const budget = Number(form.max_evaluations);
+    const seed = Number(form.seed);
+    if (!Number.isSafeInteger(population) || population < 4 ||
+        !Number.isSafeInteger(budget) || budget < population ||
+        (form.seed !== '' && (!Number.isSafeInteger(seed) || seed < 0))) {
+      toast.error("جمعیت باید حداقل ۴ و بودجه حداقل برابر جمعیت باشد. بذر باید عدد صحیح نامنفی باشد.");
+      return;
+    }
     setSaving(true);
     try {
       const res = await schedulingService.create(form);
@@ -114,7 +120,7 @@ export default function SchedulingRun() {
         if (d.status === "completed" || d.status === "failed") {
           clearInterval(pollRef.current);
           load();
-          if (d.status === "completed") toast.success("زمان‌بندی با موفقیت تولید شد");
+          if (d.status === "completed") toast.success("اجرا تکمیل شد؛ کیفیت زمان‌بندی را در جزئیات بررسی کنید");
           if (d.status === "failed") toast.error("اجرای الگوریتم با خطا مواجه شد");
         }
       }
@@ -198,8 +204,8 @@ export default function SchedulingRun() {
       </div>
 
       <p className="text-sm text-text_secondary_color mb-4">
-        الگوریتم هیبرید BBO + گرگ خاکستری، با توجه به اساتید، دروس، مکان‌ها و گروه‌های دانشجویی ثبت‌شده
-        در نیمسال فعال، بهترین زمان‌بندی ممکن را پیدا می‌کند. نتیجه را می‌توانید بررسی، تأیید یا رد کنید.
+        روش COOP0 با همکاری BBO و گرگ خاکستری، ابتدا نقض قیود سخت و سپس جریمه ترجیحات را کاهش می‌دهد.
+        نتیجه را همراه با وضعیت اعتبار برنامه می‌توانید بررسی، تأیید یا رد کنید.
       </p>
 
       {loading ? (
@@ -253,11 +259,12 @@ export default function SchedulingRun() {
           <InputField id="name" label="نام این اجرا" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full sm:col-span-2" />
           <InputField id="description" label="توضیحات (اختیاری)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full sm:col-span-2" />
           <InputField id="popsize" label="اندازه جمعیت الگوریتم" type="number" value={form.popsize} onChange={(e) => setForm({ ...form, popsize: e.target.value })} className="w-full" />
-          <InputField id="maxgen" label="تعداد نسل‌ها" type="number" value={form.maxgen} onChange={(e) => setForm({ ...form, maxgen: e.target.value })} className="w-full" />
-          <InputField id="teacher_conflict_cost" label="جریمه تداخل استاد" type="number" value={form.teacher_conflict_cost} onChange={(e) => setForm({ ...form, teacher_conflict_cost: e.target.value })} className="w-full" />
-          <InputField id="place_conflict_cost" label="جریمه تداخل مکان" type="number" value={form.place_conflict_cost} onChange={(e) => setForm({ ...form, place_conflict_cost: e.target.value })} className="w-full" />
-          <InputField id="capacity_cost" label="جریمه کمبود ظرفیت" type="number" value={form.capacity_cost} onChange={(e) => setForm({ ...form, capacity_cost: e.target.value })} className="w-full" />
-          <InputField id="gender_mismatch_cost" label="جریمه عدم تطابق جنسیت" type="number" value={form.gender_mismatch_cost} onChange={(e) => setForm({ ...form, gender_mismatch_cost: e.target.value })} className="w-full" />
+          <InputField id="max_evaluations" label="بودجه ارزیابی جواب‌ها" type="number" value={form.max_evaluations} onChange={(e) => setForm({ ...form, max_evaluations: e.target.value })} className="w-full" />
+          <InputField id="seed" label="بذر تصادفی (اختیاری)" type="number" value={form.seed} onChange={(e) => setForm({ ...form, seed: e.target.value })} className="w-full" />
+          <p className="text-xs text-text_secondary_color sm:col-span-2">
+            بودجه بیشتر فرصت جست‌وجوی بیشتری می‌دهد و زمان اجرا را افزایش می‌دهد.
+            با داده‌ها، تنظیمات و بذر یکسان، نتیجه قابل تکرار است.
+          </p>
         </div>
         <div className="flex justify-end gap-2 mt-6">
           <Button type="button" onClick={() => setShowForm(false)} className="bg-gray-200 text-text_primary_color px-4 py-2 w-auto h-auto">انصراف</Button>
@@ -295,8 +302,19 @@ export default function SchedulingRun() {
 
             {selectedTask.status === "completed" && selectedTask.schedule_data && (
               <>
+                {selectedTask.schedule_data.algorithm === 'COOP0' && (
+                  <div className={`rounded-lg p-3 mb-4 text-sm ${selectedTask.schedule_data.feasible ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'}`}>
+                    <p>{selectedTask.schedule_data.feasible ? 'قیود سختِ ارزیابی‌شده رعایت شده‌اند.' : 'این برنامه هنوز نقض قید سخت دارد و نیازمند بازنگری است.'}</p>
+                    <p className="text-xs mt-1">COOP0 — ارزیابی: {selectedTask.schedule_data.evaluations} از {selectedTask.schedule_data.evaluation_budget} — بذر: {selectedTask.schedule_data.seed}</p>
+                  </div>
+                )}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                  <StatBox label="هزینه کل" value={selectedTask.total_cost} />
+                  {selectedTask.schedule_data.hard_violations != null ? (
+                    <>
+                      <StatBox label="نقض قیود سخت (H)" value={selectedTask.schedule_data.hard_violations} warn />
+                      <StatBox label="جریمه نرم (S)" value={selectedTask.schedule_data.soft_penalty} />
+                    </>
+                  ) : <StatBox label="هزینه کل" value={selectedTask.total_cost} />}
                   <StatBox label="تداخل استاد" value={selectedTask.teacher_conflicts} warn />
                   <StatBox label="تداخل مکان" value={selectedTask.place_conflicts} warn />
                   <StatBox label="مشکل ظرفیت" value={selectedTask.capacity_issues} warn />

@@ -192,16 +192,15 @@ class SchedulingAlgorithmRunner:
                 sys.path.append(algorithm_path)
 
             try:
-                from hybrid_bbo_rl import HybridBBO_RL_Scheduler
+                from hybrid_bbo_rl import COOP0Scheduler
+                from coop0 import validate_parameters
             except ImportError as e:
                 raise Exception(f"خطا در ایمپورت الگوریتم: {str(e)}")
 
-            scheduler = HybridBBO_RL_Scheduler(config=config)
-
-            if self.task.algorithm_params:
-                for key, value in self.task.algorithm_params.items():
-                    if hasattr(scheduler, key) and value is not None:
-                        setattr(scheduler, key, value)
+            params = validate_parameters(self.task.algorithm_params or {})
+            scheduler = COOP0Scheduler(config=config, seed=params.pop('seed', None))
+            for key, value in params.items():
+                setattr(scheduler, key, value)
 
             best_schedule = scheduler.optimize_with_hybrid_approach()
 
@@ -382,6 +381,10 @@ class SchedulingAlgorithmRunner:
                 'execution_time': execution_time,
                 'generations_run': best_schedule.get('generations_run'),
             }
+            for key in ('algorithm', 'algorithm_version', 'seed', 'objective', 'hard_violations',
+                        'soft_penalty', 'feasible', 'evaluations', 'evaluation_budget', 'cycles_run'):
+                if key in best_schedule:
+                    self.task.result[key] = best_schedule[key]
             self.task.save()
 
     def _count_conflicts(self, schedule, conflict_type):
@@ -549,13 +552,14 @@ def export_university_config_to_excel(university_config):
 class ScheduleExporter:
     def __init__(self, schedule_result):
         self.schedule_result = schedule_result
+        self.schedule_data = schedule_result.schedule_data or {}
 
     def export_to_text(self):
         """صدور زمان‌بندی به فرمت متنی"""
         schedule_data = self.schedule_result.schedule_data
         output = []
 
-        output.append("زمان‌بندی بهینه کلاس‌ها")
+        output.append("زمان‌بندی کلاس‌ها")
         output.append("=" * 80)
         output.append("")
 
@@ -581,7 +585,10 @@ class ScheduleExporter:
                 output.append(f"  مکان: {course.get('place_code')}")
                 output.append("")
 
-        output.append(f"هزینه کل: {self.schedule_result.total_cost}")
+        if self.schedule_data.get('algorithm') == 'COOP0':
+            output.append(f"COOP0 | H: {self.schedule_data['hard_violations']} | S: {self.schedule_data['soft_penalty']}")
+            output.append(f"ارزیابی: {self.schedule_data['evaluations']} | بذر: {self.schedule_data['seed']}")
+        output.append(f"هزینه وزنی قدیمی: {self.schedule_result.total_cost}")
         output.append(f"تداخل اساتید: {self.schedule_result.teacher_conflicts}")
         output.append(f"تداخل مکان‌ها: {self.schedule_result.place_conflicts}")
 
@@ -728,8 +735,13 @@ class ScheduleExporter:
 
         elements.append(Spacer(1, 10))
         summary_style = ParagraphStyle('SummaryFa', fontName=font_name, fontSize=9, alignment=1)
+        if self.schedule_data.get('algorithm') == 'COOP0':
+            elements.append(Paragraph(
+                rtl(f"COOP0 | نقض قیود سخت: {self.schedule_data['hard_violations']} | "
+                    f"جریمه نرم: {self.schedule_data['soft_penalty']}"), summary_style
+            ))
         elements.append(Paragraph(
-            rtl(f"هزینه کل: {self.schedule_result.total_cost} | "
+            rtl(f"هزینه وزنی قدیمی: {self.schedule_result.total_cost} | "
                 f"تداخل اساتید: {self.schedule_result.teacher_conflicts} | "
                 f"تداخل مکان‌ها: {self.schedule_result.place_conflicts} | "
                 f"وضعیت: {self.schedule_result.get_approval_status_display()}"),

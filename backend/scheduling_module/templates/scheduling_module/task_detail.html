@@ -106,6 +106,15 @@
 
                 <!-- نتایج -->
                 {% if task.status == 'completed' and result %}
+                {% if result.schedule_data.algorithm == 'COOP0' %}
+                <div class="alert {% if result.schedule_data.feasible %}alert-success{% else %}alert-warning{% endif %}">
+                    COOP0 — نقض قیود سخت: {{ result.schedule_data.hard_violations }}؛
+                    جریمه نرم: {{ result.schedule_data.soft_penalty }}؛
+                    ارزیابی: {{ result.schedule_data.evaluations }} از {{ result.schedule_data.evaluation_budget }}
+                    <br>بذر تصادفی: {{ result.schedule_data.seed }}
+                    {% if not result.schedule_data.feasible %}<br>برنامه هنوز نقض قید سخت دارد و نیازمند بازنگری است.{% endif %}
+                </div>
+                {% endif %}
                 <div class="card mb-4">
                     <div class="card-header bg-success text-white">
                         <h5 class="mb-0">نتایج زمان‌بندی</h5>
@@ -115,7 +124,7 @@
                             <div class="col-md-3">
                                 <div class="border rounded p-3">
                                     <h3 class="text-primary">{{ result.total_cost }}</h3>
-                                    <small class="text-muted">هزینه کل</small>
+                                    <small class="text-muted">هزینه وزنی قدیمی</small>
                                 </div>
                             </div>
                             <div class="col-md-3">

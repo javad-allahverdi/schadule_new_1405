@@ -32,12 +32,9 @@ else:
 def run_once(seed, popsize, maxgen, rng_seed=None):
     """یک بار اجرای الگوریتم روی seed و برگرداندن (نتیجه، زمان اجرا)."""
     config = seed_to_algorithm_config(seed)
-    scheduler = build_scheduler(config)
+    scheduler = build_scheduler(config, seed=rng_seed)
     scheduler.popsize = popsize
     scheduler.maxgen = maxgen
-    if rng_seed is not None:
-        import random
-        scheduler._rng = random.Random(rng_seed)
 
     started = time.time()
     result = scheduler.optimize_with_hybrid_approach()
@@ -61,14 +58,14 @@ def report(seed, popsize, maxgen, repeats):
         costs.append(result['cost'])
         times.append(elapsed)
         exacts.append(cmp_result['agreement']['exact']['percent'])
-        violations.append(cmp_result['produced']['total_violations'])
+        violations.append(result['hard_violations'])
 
-        print(f"  اجرا {i + 1}: هزینه={result['cost']:>7.1f} | تخلف={violations[-1]:>3} | "
-              f"انطباق با مرجع={exacts[-1]:>5.1f}٪ | نسل‌ها={result['generations_run']:>4} | "
+        print(f"  اجرا {i + 1}: COOP0 H={result['hard_violations']} S={result['soft_penalty']} | "
+              f"انطباق با مرجع={exacts[-1]:>5.1f}٪ | ارزیابی={result['evaluations']:>4} | بذر={result['seed']} | "
               f"{elapsed:.2f} ثانیه | {cmp_result['verdict']['label']}")
 
     print('-' * 78)
-    print(f"  میانگین هزینه: {statistics.mean(costs):.1f}   "
+    print(f"  میانگین هزینه وزنی قدیمی: {statistics.mean(costs):.1f}   "
           f"بهترین: {min(costs):.1f}   بدترین: {max(costs):.1f}")
     print(f"  میانگین تخلف: {statistics.mean(violations):.1f}   "
           f"میانگین انطباق با مرجع: {statistics.mean(exacts):.1f}٪   "

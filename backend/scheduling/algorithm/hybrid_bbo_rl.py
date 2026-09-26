@@ -1,44 +1,23 @@
 # -*- coding: utf-8 -*-
-"""
-hybrid_bbo_rl.py
-=================
-الگوریتم هیبرید بهینه‌سازی مبتنی بر زیست‌جغرافیا (Biogeography-Based
-Optimization / BBO) و گرگ خاکستری (Grey Wolf Optimizer / GWO) برای حل مسئله
-زمان‌بندی دروس دانشگاهی (University Course Timetabling Problem - UCTP).
+"""University timetabling with the paper's COOP0 cooperative BBO/GWO method.
 
-ورودی: مسیر یک فایل YAML شامل چهار بخش settings / places / teachers /
-       courses / constraints (خروجی ExcelToYAMLConverter در
-       scheduling_module/utils.py)
+A solution contains one complete assignment per session. COOP0 performs a
+selective BBO stage followed by a discrete leader-copy GWO stage with refreshed
+leaders. Candidates are accepted by the lexicographic (hard, soft) objective.
+See coop0.py and README.md for the exact operators and evaluation budget.
 
-خروجی: دیکشنری شامل کلید 'cost' (هزینه‌ی کل جواب نهایی، هرچه کمتر بهتر) و
-       'courses' (لیست جلسات زمان‌بندی‌شده)
-
---------------------------------------------------------------------------
-ایده‌ی کلی الگوریتم
---------------------------------------------------------------------------
-هر جواب (Individual/Habitat/Wolf) یک لیست از "ژن" است؛ هر ژن نشان‌دهنده‌ی
-تخصیص یک جلسه‌ی درسی به (روز، بازه‌ی زمانی، مکان، استاد) است.
-
-در هر نسل، الگوریتم به‌صورت متناوب یکی از دو عملگر زیر را روی جمعیت اعمال
-می‌کند:
-
-  ۱) عملگر مهاجرت BBO: جواب‌های ضعیف‌تر (HSI پایین) با احتمال بیشتری از
-     جواب‌های قوی‌تر «مهاجرت ژن» می‌گیرند (Migration) و سپس با نرخ کمی
-     جهش (Mutation) می‌کنند تا از افتادن در بهینه‌ی محلی جلوگیری شود.
-
-  ۲) عملگر گرگ خاکستری (GWO): سه جواب برتر جمعیت به‌عنوان رهبران گله
-     (آلفا/بتا/دلتا) در نظر گرفته می‌شوند و بقیه‌ی گرگ‌ها (جواب‌ها) با
-     احتمالی که به ضریب هم‌گرایی a (که از ۲ به ۰ در طول اجرا کاهش می‌یابد)
-     وابسته است، به‌سمت رهبران حرکت می‌کنند یا به کاوش تصادفی می‌پردازند.
-
-این دو عملگر مکمل هم عمل می‌کنند: BBO تنوع جمعیت (exploration) را حفظ
-می‌کند و GWO هم‌گرایی سریع به سمت جواب‌های خوب (exploitation) را تضمین
-می‌کند. بهترین جواب هر نسل با نخبه‌گرایی (Elitism) در جمعیت نگه داشته
-می‌شود تا هرگز از دست نرود.
+The historical class name and weighted _fitness/cost are retained for callers
+and legacy reports. Weighted cost does not determine acceptance or feasibility.
+There is no reinforcement learning in this implementation.
 """
 
 import copy
 import random
+
+try:
+    from .coop0 import run_coop0
+except ImportError:  # backwards-compatible direct module import
+    from coop0 import run_coop0
 
 try:
     import yaml
@@ -62,9 +41,9 @@ class HybridBBO_RL_Scheduler:
     استفاده:
         scheduler = HybridBBO_RL_Scheduler('/path/to/config.yaml')
         scheduler.popsize = 50          # قابل تنظیم از بیرون
-        scheduler.maxgen = 100
+        scheduler.max_evaluations = 5000
         result = scheduler.optimize_with_hybrid_approach()
-        # result = {'cost': 0, 'courses': [...], 'generations_run': 42, 'convergence': [...]}
+        # result includes objective=[H, S], feasible, evaluations and courses
     """
 
     # ------------------------------------------------------------------
@@ -124,6 +103,9 @@ class HybridBBO_RL_Scheduler:
         # ------------------ ابرپارامترهای الگوریتم (قابل تنظیم) ------------------
         self.popsize = 40
         self.maxgen = 80
+        # If absent, use popsize * (maxgen + 1), including initialization.
+        self.max_evaluations = None
+        # Parameters of the retained legacy operators, not COOP0 controls.
         self.elite_count = 2
         self.mutation_rate = 0.12
 
@@ -141,7 +123,8 @@ class HybridBBO_RL_Scheduler:
         self.place_unavailable_cost = 90
         self.time_preference_bonus = 15
 
-        self._rng = random.Random(seed)
+        self.seed = seed if seed is not None else random.SystemRandom().randrange(2**53)
+        self._rng = random.Random(self.seed)
 
     # ------------------------------------------------------------------
     # نرمال‌سازی ورودی‌ها
@@ -418,50 +401,8 @@ class HybridBBO_RL_Scheduler:
     # حلقه‌ی اصلی بهینه‌سازی
     # ------------------------------------------------------------------
     def optimize_with_hybrid_approach(self, progress_callback=None):
-        if not self.sessions:
-            return {'cost': 0, 'courses': [], 'generations_run': 0, 'convergence': [0]}
-
-        population = self._init_population()
-        fitnesses = [self._fitness(ind) for ind in population]
-
-        best_idx = min(range(len(population)), key=lambda i: fitnesses[i])
-        best_individual = copy.deepcopy(population[best_idx])
-        best_cost = fitnesses[best_idx]
-        convergence = [best_cost]
-
-        generations_run = 0
-        for generation in range(self.maxgen):
-            generations_run = generation + 1
-
-            if generation % 2 == 0:
-                population = self._bbo_migration(population, fitnesses)
-            else:
-                population = self._gwo_update(population, fitnesses, generation)
-
-            fitnesses = [self._fitness(ind) for ind in population]
-
-            gen_best_idx = min(range(len(population)), key=lambda i: fitnesses[i])
-            if fitnesses[gen_best_idx] < best_cost:
-                best_cost = fitnesses[gen_best_idx]
-                best_individual = copy.deepcopy(population[gen_best_idx])
-
-            # نخبه‌گرایی: بهترین جواب تاریخی همیشه در جمعیت باقی می‌ماند
-            worst_idx = max(range(len(population)), key=lambda i: fitnesses[i])
-            population[worst_idx] = copy.deepcopy(best_individual)
-            fitnesses[worst_idx] = best_cost
-
-            convergence.append(best_cost)
-
-            if progress_callback:
-                try:
-                    progress_callback(generation + 1, self.maxgen, best_cost)
-                except Exception:
-                    pass
-
-            if best_cost <= 0:
-                break
-
-        return self._build_result(best_individual, best_cost, convergence, generations_run)
+        """Run COOP0; legacy operators/weighted fitness remain for comparisons."""
+        return run_coop0(self, progress_callback)
 
     # ------------------------------------------------------------------
     # ساخت خروجی نهایی
@@ -489,3 +430,7 @@ class HybridBBO_RL_Scheduler:
             'convergence': convergence,
             'population_size': self.popsize,
         }
+
+
+# Keep the historical name importable for existing tasks and benchmark scripts.
+COOP0Scheduler = HybridBBO_RL_Scheduler

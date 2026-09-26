@@ -68,54 +68,26 @@ class SchedulingConfigForm(forms.Form):
         })
     )
 
-    # پارامترهای الگوریتم
+    # COOP0 search controls; cost weights are no longer optimization parameters.
     popsize = forms.IntegerField(
-        label='اندازه جمعیت',
-        initial=10,
-        min_value=5,
-        max_value=50,
+        label='اندازه جمعیت', initial=40, min_value=4,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    max_evaluations = forms.IntegerField(
+        label='بودجه ارزیابی جواب‌ها', initial=3240, min_value=4,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    seed = forms.IntegerField(
+        label='بذر تصادفی (اختیاری)', required=False, min_value=0, max_value=2**53 - 1,
         widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
 
-    maxgen = forms.IntegerField(
-        label='تعداد نسل‌ها',
-        initial=10,
-        min_value=5,
-        max_value=100,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
-    )
-
-    teacher_conflict_cost = forms.IntegerField(
-        label='هزینه تداخل استاد',
-        initial=500,
-        min_value=100,
-        max_value=1000,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
-    )
-
-    place_conflict_cost = forms.IntegerField(
-        label='هزینه تداخل مکان',
-        initial=500,
-        min_value=100,
-        max_value=1000,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
-    )
-
-    capacity_cost = forms.IntegerField(
-        label='هزینه ظرفیت',
-        initial=30,
-        min_value=10,
-        max_value=100,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
-    )
-
-    gender_mismatch_cost = forms.IntegerField(
-        label='هزینه عدم تطابق جنسیت',
-        initial=80,
-        min_value=10,
-        max_value=200,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
-    )
+    def clean(self):
+        data = super().clean()
+        if data.get('popsize') and data.get('max_evaluations'):
+            if data['max_evaluations'] < data['popsize']:
+                self.add_error('max_evaluations', 'بودجه باید حداقل برابر اندازه جمعیت باشد.')
+        return data
 
 
 class ManualCourseForm(forms.Form):

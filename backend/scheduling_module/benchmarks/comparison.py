@@ -308,6 +308,9 @@ def compare_with_target(seed, produced_entries):
         },
         'agreement': agreement,
         'target': {
+            'hard_violations': target_report['hard_violations'],
+            'soft_penalty': target_report['soft_penalty'],
+            'feasible': target_report['feasible'],
             'cost': target_cost,
             'sessions': len(target_entries),
             'violations': target_report['violations'],
@@ -315,6 +318,9 @@ def compare_with_target(seed, produced_entries):
             'time_preferences': target_report['time_preferences'],
         },
         'produced': {
+            'hard_violations': produced_report['hard_violations'],
+            'soft_penalty': produced_report['soft_penalty'],
+            'feasible': produced_report['feasible'],
             'cost': produced_cost,
             'sessions': len(produced_entries),
             'violations': produced_report['violations'],
@@ -339,10 +345,13 @@ def _build_verdict(agreement, target_report, produced_report,
     داوری نهایی — بر پایه‌ی «کیفیت»، نه شباهت ظاهری به پاسخ مرجع.
     """
     exact_percent = agreement['exact']['percent']
-    produced_violations = produced_report['total_violations']
-    target_violations = target_report['total_violations']
+    produced_violations = produced_report['hard_violations']
+    target_violations = target_report['hard_violations']
+    produced_soft = produced_report['soft_penalty']
+    target_soft = target_report['soft_penalty']
 
-    if n_produced != n_target:
+    if (n_produced != n_target or produced_report['violations']['missing_session']
+            or produced_report['violations']['extra_session']):
         return {
             'code': 'incomplete',
             'label': 'ناقص',
@@ -350,11 +359,17 @@ def _build_verdict(agreement, target_report, produced_report,
             'title': 'تعداد جلسات خروجی با پاسخ مرجع یکی نیست',
             'detail': (
                 f'پاسخ مرجع {n_target} جلسه دارد ولی خروجی الگوریتم {n_produced} جلسه؛ '
-                'احتمالاً داده‌های نیمسال بعد از بارگذاری seed تغییر کرده است.'
+                'تعداد جلسات هر درس باید با مرجع مطابقت داشته باشد.'
             ),
         }
 
     if produced_violations == 0:
+        if produced_soft > target_soft:
+            return {
+                'code': 'feasible', 'label': 'معتبر، با جریمه نرم', 'tone': 'warning',
+                'title': 'قیود سخت رعایت شده‌اند؛ ترجیحات هنوز قابل بهبودند',
+                'detail': f'جریمه نرم خروجی {produced_soft} و مرجع {target_soft} است.',
+            }
         if exact_percent >= 100:
             return {
                 'code': 'identical',
@@ -369,21 +384,21 @@ def _build_verdict(agreement, target_report, produced_report,
             'tone': 'success',
             'title': 'خروجی الگوریتم هم‌ارزِ پاسخ مرجع است',
             'detail': (
-                'جدول تولیدشده با پاسخ مرجع یکی نیست، اما هیچ محدودیتی را نقض نمی‌کند؛ '
+                'جدول تولیدشده با پاسخ مرجع یکی نیست، اما قیود سخت و ترجیحات ارزیابی‌شده را رعایت می‌کند؛ '
                 f'یعنی یکی دیگر از جواب‌های بهینه‌ی همین مسئله است. میزان شباهت به مرجع: '
                 f'{exact_percent}٪.'
             ),
         }
 
-    if produced_violations <= target_violations:
+    if (produced_violations, produced_soft) <= (target_violations, target_soft):
         tone, code, label = 'success', 'equivalent_optimal', 'هم‌ارز مرجع'
         title = 'کیفیت خروجی از پاسخ مرجع کمتر نیست'
     elif produced_violations <= 3:
         tone, code, label = 'warning', 'near_optimal', 'نزدیک به بهینه'
-        title = f'خروجی الگوریتم {produced_violations} تخلف جزئی دارد'
+        title = f'خروجی الگوریتم هنوز {produced_violations} نقض قید سخت دارد'
     else:
         tone, code, label = 'error', 'suboptimal', 'دور از بهینه'
-        title = f'خروجی الگوریتم {produced_violations} تخلف دارد'
+        title = f'خروجی الگوریتم {produced_violations} نقض قید سخت دارد'
 
     broken = {k: n for k, n in produced_report['violations'].items() if n}
     labels = produced_report['violation_labels']

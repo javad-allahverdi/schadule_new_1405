@@ -759,6 +759,8 @@ class SchedulingTaskViewSet(viewsets.ModelViewSet):
             'execution_time': task.execution_time,
             'stored_cost': task.schedule_result.total_cost,
             'generations_run': (task.schedule_result.schedule_data or {}).get('generations_run'),
+            'evaluations': (task.schedule_result.schedule_data or {}).get('evaluations'),
+            'algorithm': (task.schedule_result.schedule_data or {}).get('algorithm'),
         }
         return Response({'success': True, 'comparison': comparison})
 
@@ -1153,11 +1155,8 @@ class ManualInputView(SchedulingBaseView):
                     description=config_form.cleaned_data.get('description', ''),
                     algorithm_params={
                         'popsize': config_form.cleaned_data['popsize'],
-                        'maxgen': config_form.cleaned_data['maxgen'],
-                        'teacher_conflict_cost': config_form.cleaned_data['teacher_conflict_cost'],
-                        'place_conflict_cost': config_form.cleaned_data['place_conflict_cost'],
-                        'capacity_cost': config_form.cleaned_data['capacity_cost'],
-                        'gender_mismatch_cost': config_form.cleaned_data['gender_mismatch_cost'],
+                        'max_evaluations': config_form.cleaned_data['max_evaluations'],
+                        'seed': config_form.cleaned_data['seed'],
                     },
                     status='pending'
                 )
@@ -1503,6 +1502,13 @@ class BenchmarkSeedLoadAPIView(APIView):
 
     def post(self, request, seed_key):
         from .benchmarks.db_loader import SeedLoadError, load_seed_into_db
+        from scheduling.algorithm.coop0 import validate_parameters
+
+        try:
+            algorithm_params = validate_parameters(request.data.get('algorithm_params', {}))
+        except ValueError as exc:
+            return Response({'success': False, 'message': str(exc)},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         university = request.user.university
         if request.user.role == 'supervisor' and request.data.get('university_id'):
@@ -1533,7 +1539,7 @@ class BenchmarkSeedLoadAPIView(APIView):
                 name=f'اجرای آزمون — {config.name}',
                 description='اجرای الگوریتم روی داده‌ی آزمون برای مقایسه با پاسخ مرجع',
                 university_config=config,
-                algorithm_params=request.data.get('algorithm_params') or {},
+                algorithm_params=algorithm_params,
             )
             task_id = task.id
 

@@ -37,11 +37,8 @@ const schedulingService = {
         university_config: parseInt(activeId),
         algorithm_params: {
           popsize: parseInt(formData.popsize) || 40,
-          maxgen: parseInt(formData.maxgen) || 80,
-          teacher_conflict_cost: parseInt(formData.teacher_conflict_cost) || 100,
-          place_conflict_cost: parseInt(formData.place_conflict_cost) || 100,
-          capacity_cost: parseInt(formData.capacity_cost) || 50,
-          gender_mismatch_cost: parseInt(formData.gender_mismatch_cost) || 40,
+          max_evaluations: Number(formData.max_evaluations),
+          ...(formData.seed !== '' && formData.seed != null ? { seed: Number(formData.seed) } : {}),
         },
       };
       const response = await api.post('/scheduling/api/scheduling-tasks/', payload);
@@ -49,7 +46,7 @@ const schedulingService = {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || error.response?.data?.detail || 'خطا در ایجاد وظیفه',
+        message: error.response?.data?.algorithm_params?.[0] || error.response?.data?.message || error.response?.data?.detail || 'خطا در ایجاد وظیفه',
         errors: error.response?.data,
       };
     }
@@ -141,7 +138,7 @@ const schedulingService = {
         } else if (error.message) {
           message = error.message;
         }
-      } catch (parseErr) {
+      } catch {
         // اگر خواندن Blob هم شکست خورد، همان پیام پیش‌فرض باقی می‌ماند
       }
 

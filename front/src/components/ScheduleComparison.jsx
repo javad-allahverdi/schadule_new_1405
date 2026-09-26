@@ -61,22 +61,22 @@ export default function ScheduleComparison({ comparison }) {
       {/* اعداد کلیدی */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         <CompareBox
-          label="تخلف‌ها"
-          produced={produced.total_violations}
-          target={target.total_violations}
+          label="نقض قیود سخت (H)"
+          produced={produced.hard_violations}
+          target={target.hard_violations}
           lowerIsBetter
         />
         <CompareBox
-          label="هزینه"
-          produced={produced.cost}
-          target={target.cost}
+          label="جریمه نرم (S)"
+          produced={produced.soft_penalty}
+          target={target.soft_penalty}
           lowerIsBetter
         />
         <StatBox label="جلسات تولیدشده" value={`${produced.sessions} از ${target.sessions}`} />
         <StatBox
           label="زمان اجرا"
           value={task?.execution_time ? `${task.execution_time.toFixed(2)} ثانیه` : '—'}
-          hint={task?.generations_run ? `${task.generations_run} نسل` : null}
+          hint={task?.evaluations != null ? `${task.evaluations} ارزیابی (${task.algorithm})` : task?.generations_run ? `${task.generations_run} نسل` : null}
         />
       </div>
 
@@ -177,7 +177,7 @@ function SummaryTab({ agreement, produced, target, comparison }) {
             این درصدها «شباهت به یک جواب بهینه‌ی مشخص» را می‌سنجند، نه درستی را. مسئله‌ی
             زمان‌بندی معمولاً هزاران جواب بهینه دارد؛ بنابراین خروجی الگوریتم می‌تواند کاملاً
             بی‌نقص باشد ولی انطباق پایینی با این جدول خاص داشته باشد. ملاک درستی، ستون
-            «تخلف‌ها» در بالای صفحه است.
+            «نقض قیود سخت (H)» و «جریمه نرم (S)» در بالای صفحه است.
           </span>
         </div>
       </div>
@@ -188,7 +188,7 @@ function SummaryTab({ agreement, produced, target, comparison }) {
         </h4>
         {rows.length === 0 ? (
           <div className="bg-success/10 text-success rounded-lg px-3 py-3 text-sm">
-            هیچ تخلفی در هیچ‌کدام از دو زمان‌بندی وجود ندارد — خروجی الگوریتم کاملاً معتبر است.
+            نقض قید سختی در دو برنامه ثبت نشده است. میزان رعایت ترجیحات را با جریمه نرم (S) بررسی کنید.
           </div>
         ) : (
           <div className="overflow-x-auto rounded-lg border border-line_color">
