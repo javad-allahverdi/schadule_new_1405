@@ -5,12 +5,17 @@ weights. Tuples (H, S) are compared lexicographically, without bonus subtraction
 """
 
 from collections import Counter, defaultdict, deque
+try:
+    from .weekly_loads import WeeklyLoads, weekly_loads_enabled
+except ImportError:
+    from weekly_loads import WeeklyLoads, weekly_loads_enabled
 
 
 class TimetableObjective:
     def __init__(self, scheduler):
         self.scheduler = scheduler
         self.slot_ids = {slot['id'] for slot in scheduler.time_slots}
+        self.weekly = WeeklyLoads(scheduler) if weekly_loads_enabled(scheduler.config) else None
         self.unavailable = {
             code: set(map(str, teacher.get('unavailable_times') or []))
             for code, teacher in scheduler.teacher_by_code.items()
@@ -91,11 +96,18 @@ class TimetableObjective:
                     if tuple(sorted((first, second))) in s._conflicting_course_pairs:
                         violations['group_conflict'] += 1
 
+        weekly_counts = self.weekly.loads(individual) if self.weekly else None
+        if self.weekly:
+            minimum, maximum = self.weekly.violations(weekly_counts)
+            if minimum:
+                violations['weekly_minimum_units'] = minimum
+            if maximum:
+                violations['weekly_maximum_units'] = maximum
         daily = sum(max(0, n - s.max_classes_per_day) for n in teacher_days.values())
         missed = sum(max(0, weight) for k, (_, _, _, weight) in enumerate(s._time_preferences)
                      if k not in satisfied)
         hard = sum(violations.values())
-        return {
+        result = {
             'objective': (hard, daily + missed),
             'hard_violations': hard,
             'soft_penalty': daily + missed,
@@ -105,3 +117,7 @@ class TimetableObjective:
             'unmet_preference_weight': missed,
             'time_preferences': {'satisfied': len(satisfied), 'total': len(s._time_preferences)},
         }
+        if self.weekly:
+            result['constraint_model'] = 'weekly-loads-v1'
+            result['weekly_teacher_loads'] = {tc:weekly_counts[tc]/self.weekly.scale for tc in self.weekly.bounds}
+        return result

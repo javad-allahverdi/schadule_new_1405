@@ -208,6 +208,10 @@
                             </div>
 
                             <h6 class="mt-4">پارامترهای الگوریتم</h6>
+                            <div class="mb-3">
+                                <label class="form-label">روش زمان‌بندی</label>
+                                {{ config_form.algorithm }}
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -227,6 +231,10 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">بذر تصادفی (اختیاری)</label>
                                     {{ config_form.seed }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">حداکثر زمان حل CP-SAT (ثانیه)</label>
+                                    {{ config_form.time_limit_seconds }}
                                 </div>
                             </div>
                             {{ config_form.errors }}

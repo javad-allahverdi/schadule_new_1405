@@ -74,6 +74,8 @@ def algorithm_cost(config, entries):
 # تفکیک تخلف‌ها
 # --------------------------------------------------------------------------
 VIOLATION_LABELS = {
+    'weekly_minimum_units': 'کسری حداقل واحد هفتگی استاد (قید سخت)',
+    'weekly_maximum_units': 'مازاد حداکثر واحد هفتگی استاد (قید سخت)',
     'domain': 'روز یا بازه نامعتبر',
     'missing_session': 'جلسه مفقود',
     'extra_session': 'جلسه اضافی یا درس ناشناخته',

@@ -617,6 +617,15 @@ class SchedulingTaskViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         result = task.schedule_result
+        data = result.schedule_data or {}
+        weekly = data.get('weekly_load_audit') or {}
+        if (data.get('feasible') is False or data.get('hard_violations', 0) > 0
+                or weekly.get('minimum_deficit_units', 0) > 0
+                or weekly.get('maximum_excess_units', 0) > 0):
+            return Response({
+                'success': False,
+                'message': 'برنامه دارای نقض قید سخت یا بار هفتگی است و قابل نهایی‌سازی نیست.',
+            }, status=status.HTTP_400_BAD_REQUEST)
         result.approval_status = 'approved'
         result.approved_by = request.user
         result.approved_at = timezone.now()
@@ -747,7 +756,11 @@ class SchedulingTaskViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            comparison = compare_with_target(seed, produced)
+            # The reference and output must be evaluated under the run's model.
+            comparison = compare_with_target(
+                seed, produced,
+                weekly_loads=(task.schedule_result.schedule_data or {}).get('constraint_model') == 'weekly-loads-v1',
+            )
         except Exception as exc:  # noqa: BLE001
             logger.exception('خطا در مقایسه با پاسخ مرجع')
             return Response({'success': False, 'message': f'خطا در مقایسه: {exc}'},
@@ -1051,6 +1064,7 @@ class ExcelUploadView(SchedulingBaseView):
                     created_by=request.user,
                     university_config=university,
                     name=form.cleaned_data['config_name'],
+                    algorithm_params={'algorithm': 'CP-SAT'},
                     status='pending'
                 )
 
@@ -1154,8 +1168,10 @@ class ManualInputView(SchedulingBaseView):
                     name=config_form.cleaned_data['name'],
                     description=config_form.cleaned_data.get('description', ''),
                     algorithm_params={
+                        'algorithm': config_form.cleaned_data['algorithm'],
                         'popsize': config_form.cleaned_data['popsize'],
                         'max_evaluations': config_form.cleaned_data['max_evaluations'],
+                        'time_limit_seconds': config_form.cleaned_data['time_limit_seconds'],
                         'seed': config_form.cleaned_data['seed'],
                     },
                     status='pending'
@@ -1502,10 +1518,10 @@ class BenchmarkSeedLoadAPIView(APIView):
 
     def post(self, request, seed_key):
         from .benchmarks.db_loader import SeedLoadError, load_seed_into_db
-        from scheduling.algorithm.coop0 import validate_parameters
+        from .search_policy import application_parameters
 
         try:
-            algorithm_params = validate_parameters(request.data.get('algorithm_params', {}))
+            algorithm_params = application_parameters(request.data.get('algorithm_params', {}))
         except ValueError as exc:
             return Response({'success': False, 'message': str(exc)},
                             status=status.HTTP_400_BAD_REQUEST)

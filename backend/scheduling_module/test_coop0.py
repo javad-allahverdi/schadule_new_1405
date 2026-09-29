@@ -217,7 +217,7 @@ class COOP0IntegrationTests(TestCase):
         client.force_authenticate(self.user)
         response = client.post('/scheduling/api/scheduling-tasks/', {
             'name': 'COOP0', 'university_config': config.id,
-            'algorithm_params': {'popsize': 8, 'max_evaluations': 100, 'seed': 0},
+            'algorithm_params': {'algorithm': 'COOP0', 'popsize': 8, 'max_evaluations': 100, 'seed': 0},
         }, format='json')
         self.assertEqual(response.status_code, 201, response.data)
         task = SchedulingTask.objects.get(pk=response.data['id'])

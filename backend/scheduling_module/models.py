@@ -373,6 +373,7 @@ class ScheduleConstraint(models.Model):
         ('same_teacher_courses', 'دروس یک استاد'),
         ('place_unavailable', 'عدم دسترسی مکان'),
         ('time_preference', 'ترجیح زمانی'),
+        ('teacher_weekly_load', 'حداقل و حداکثر واحد هفتگی استاد (قید سخت)'),
     ]
 
     university_config = models.ForeignKey(UniversityConfig, on_delete=models.CASCADE, related_name='constraints')

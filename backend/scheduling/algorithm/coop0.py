@@ -1,7 +1,8 @@
 """Selective BBO -> refreshed discrete GWO, matching the paper's COOP0.
 
-There is no repair/local-search stage. Every candidate, even an unchanged one,
-uses one objective evaluation. The initial population also uses the budget.
+The default COOP0 path has no repair stage; COOP1 supplies an optional refiner.
+Every candidate, even an unchanged one, uses one objective evaluation. The
+initial population also uses the budget.
 """
 
 import copy
@@ -26,10 +27,16 @@ def validate_parameters(params):
     if not isinstance(params, dict):
         raise ValueError('پارامترهای الگوریتم باید یک شیء JSON باشند.')
     normalized = {}
-    integer_limits = {'popsize': 4, 'maxgen': 0, 'max_evaluations': 4, 'seed': 0}
+    integer_limits = {'popsize': 4, 'maxgen': 0, 'max_evaluations': 4, 'seed': 0,
+                      'time_limit_seconds': 1}
     for key, value in params.items():
+        if key == 'algorithm':
+            if value not in ('CP-SAT', 'COOP0', 'COOP-C', 'COOP-D', 'COOP1', 'COOP1-RL'):
+                raise ValueError('روش زمان‌بندی نامعتبر است.')
+            normalized[key] = value
+            continue
         if key not in integer_limits and key not in LEGACY_COST_PARAMETERS:
-            raise ValueError(f'پارامتر ناشناخته برای COOP0: {key}')
+            raise ValueError(f'پارامتر ناشناخته برای زمان‌بندی: {key}')
         if value is None:
             continue
         if isinstance(value, bool):
@@ -48,12 +55,12 @@ def validate_parameters(params):
         except (ValueError, TypeError, OverflowError):
             raise ValueError(f'مقدار نامعتبر برای {key}') from None
         normalized[key] = number
-    if normalized.get('max_evaluations', float('inf')) < normalized.get('popsize', 40):
+    if normalized.get('algorithm') != 'CP-SAT' and normalized.get('max_evaluations', float('inf')) < normalized.get('popsize', 40):
         raise ValueError('بودجه ارزیابی باید حداقل برابر اندازه جمعیت باشد.')
     return normalized
 
 
-def run_coop0(s, progress_callback=None):
+def run_coop0(s, progress_callback=None, *, refiner=None):
     """Use a fixed evaluation budget, accepting ties as well as improvements."""
     params = validate_parameters({'popsize': s.popsize, 'maxgen': s.maxgen,
                                   'max_evaluations': s.max_evaluations})
@@ -92,11 +99,13 @@ def run_coop0(s, progress_callback=None):
 
     def accept(index, child, operator):
         value = score(child)
+        stats.setdefault(operator, {'attempted': 0, 'accepted': 0, 'improved': 0})
         stats[operator]['attempted'] += 1
         if value <= scores[index]:
             stats[operator]['accepted'] += 1
             stats[operator]['improved'] += int(value < scores[index])
             population[index], scores[index] = child, value
+        return value
 
     if s.sessions:
         population = s._init_population()
@@ -132,6 +141,10 @@ def run_coop0(s, progress_callback=None):
                     if rng.random() < .35 - .20 * fraction:
                         child[j] = copy.deepcopy(rng.choices(leaders, weights=[3, 2, 1])[0][j])
                 accept(i, child, 'gwo')
+            if refiner is not None and evaluations < budget:
+                # Refinement spends the SAME budget through the same acceptance
+                # function. With no refiner, COOP0's random stream is unchanged.
+                refiner.step(population, scores, accept, lambda: budget - evaluations, budget)
             cycles += 1
             record_progress()
     else:

@@ -200,7 +200,7 @@ def _structure_report(seed, target_entries, produced_entries):
     }
 
 
-def compare_with_target(seed, produced_entries):
+def compare_with_target(seed, produced_entries, *, weekly_loads=False):
     """
     مقایسه‌ی کامل خروجی الگوریتم با پاسخ مرجع یک seed.
 
@@ -209,6 +209,9 @@ def compare_with_target(seed, produced_entries):
     """
     target_entries = seed['target']['entries']
     config = seed_to_algorithm_config(seed)
+    if weekly_loads:
+        from scheduling_module.search_policy import application_config
+        config = application_config(config, 'COOP1')
 
     course_names = {c['code']: c['name'] for c in seed['courses']}
     teacher_names = {t['code']: t['full_name'] for t in seed['teachers']}

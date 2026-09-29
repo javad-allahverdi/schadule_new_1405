@@ -106,13 +106,21 @@
 
                 <!-- نتایج -->
                 {% if task.status == 'completed' and result %}
-                {% if result.schedule_data.algorithm == 'COOP0' %}
+                {% if result.schedule_data.objective %}
                 <div class="alert {% if result.schedule_data.feasible %}alert-success{% else %}alert-warning{% endif %}">
-                    COOP0 — نقض قیود سخت: {{ result.schedule_data.hard_violations }}؛
+                    {{ result.schedule_data.algorithm }} — نقض قیود سخت: {{ result.schedule_data.hard_violations }}؛
                     جریمه نرم: {{ result.schedule_data.soft_penalty }}؛
                     ارزیابی: {{ result.schedule_data.evaluations }} از {{ result.schedule_data.evaluation_budget }}
                     <br>بذر تصادفی: {{ result.schedule_data.seed }}
                     {% if not result.schedule_data.feasible %}<br>برنامه هنوز نقض قید سخت دارد و نیازمند بازنگری است.{% endif %}
+                    {% if result.schedule_data.weekly_load_audit.included_in_H %}
+                    <br>حداقل و حداکثر واحد هفتگی استادان در H محاسبه شده‌اند.
+                    {% elif result.schedule_data.weekly_load_audit.minimum_deficit_units or result.schedule_data.weekly_load_audit.maximum_excess_units %}
+                    <br>حدود بار هفتگی استادان در H محاسبه نشده‌اند و در این برنامه نقض دارند.
+                    {% endif %}
+                    {% if result.schedule_data.weekly_load_audit.stricter_model_proven_infeasible %}
+                    <br>داده‌های ورودی با سخت در نظر گرفتن حداقل بار هفتگی ناسازگارند.
+                    {% endif %}
                 </div>
                 {% endif %}
                 <div class="card mb-4">

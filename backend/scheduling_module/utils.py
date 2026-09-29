@@ -2,7 +2,6 @@ import pandas as pd
 import yaml
 import json
 import os
-import sys
 import time
 import threading
 import tempfile
@@ -187,22 +186,33 @@ class SchedulingAlgorithmRunner:
 
             config = self._load_config()
 
-            algorithm_path = os.path.join(settings.BASE_DIR, 'scheduling', 'algorithm')
-            if algorithm_path not in sys.path:
-                sys.path.append(algorithm_path)
-
             try:
-                from hybrid_bbo_rl import COOP0Scheduler
-                from coop0 import validate_parameters
+                from scheduling.algorithm.coop1 import build_search_scheduler
+                from scheduling.algorithm.model_audit import audit_weekly_loads
             except ImportError as e:
                 raise Exception(f"خطا در ایمپورت الگوریتم: {str(e)}")
 
-            params = validate_parameters(self.task.algorithm_params or {})
-            scheduler = COOP0Scheduler(config=config, seed=params.pop('seed', None))
+            from .search_policy import (
+                application_config, application_parameters, require_consistent_weekly_minima,
+            )
+            params = application_parameters(self.task.algorithm_params or {})
+            self.task.algorithm_params = dict(params)
+            self.task.save(update_fields=['algorithm_params'])
+            method = params.pop('algorithm')
+            config = application_config(config, method)
+            require_consistent_weekly_minima(config)
+            scheduler = build_search_scheduler(config, seed=params.pop('seed', None),
+                                               method=method)
             for key, value in params.items():
                 setattr(scheduler, key, value)
 
             best_schedule = scheduler.optimize_with_hybrid_approach()
+            # Check serialized output too, before exposing it as a usable result.
+            from scheduling.algorithm.objective import TimetableObjective
+            checked = TimetableObjective(scheduler).evaluate_entries(best_schedule['courses'])
+            if list(checked['objective']) != best_schedule['objective']:
+                raise ValueError('نتیجه ذخیره‌شدنی با ارزیابی نهایی قیود مطابقت ندارد.')
+            best_schedule['weekly_load_audit'] = audit_weekly_loads(config, best_schedule['courses'])
 
             execution_time = time.time() - start_time
             self._save_results(best_schedule, execution_time)
@@ -382,7 +392,7 @@ class SchedulingAlgorithmRunner:
                 'generations_run': best_schedule.get('generations_run'),
             }
             for key in ('algorithm', 'algorithm_version', 'seed', 'objective', 'hard_violations',
-                        'soft_penalty', 'feasible', 'evaluations', 'evaluation_budget', 'cycles_run'):
+                        'soft_penalty', 'feasible', 'evaluations', 'evaluation_budget', 'cycles_run', 'constraint_model'):
                 if key in best_schedule:
                     self.task.result[key] = best_schedule[key]
             self.task.save()
@@ -585,9 +595,16 @@ class ScheduleExporter:
                 output.append(f"  مکان: {course.get('place_code')}")
                 output.append("")
 
-        if self.schedule_data.get('algorithm') == 'COOP0':
-            output.append(f"COOP0 | H: {self.schedule_data['hard_violations']} | S: {self.schedule_data['soft_penalty']}")
+        if 'objective' in self.schedule_data:
+            output.append(f"{self.schedule_data['algorithm']} | H: {self.schedule_data['hard_violations']} | S: {self.schedule_data['soft_penalty']}")
             output.append(f"ارزیابی: {self.schedule_data['evaluations']} | بذر: {self.schedule_data['seed']}")
+            audit = self.schedule_data.get('weekly_load_audit', {})
+            if audit.get('included_in_H'):
+                output.append('حداقل و حداکثر واحد هفتگی استادان در H محاسبه شده‌اند.')
+            elif audit.get('minimum_deficit_units') or audit.get('maximum_excess_units'):
+                output.append('حدود هفتگی استادان در H محاسبه نشده‌اند و در این برنامه نقض دارند.')
+            if audit.get('stricter_model_proven_infeasible'):
+                output.append('داده‌های ورودی با سخت در نظر گرفتن حداقل بار هفتگی، ناسازگار هستند.')
         output.append(f"هزینه وزنی قدیمی: {self.schedule_result.total_cost}")
         output.append(f"تداخل اساتید: {self.schedule_result.teacher_conflicts}")
         output.append(f"تداخل مکان‌ها: {self.schedule_result.place_conflicts}")
@@ -735,11 +752,18 @@ class ScheduleExporter:
 
         elements.append(Spacer(1, 10))
         summary_style = ParagraphStyle('SummaryFa', fontName=font_name, fontSize=9, alignment=1)
-        if self.schedule_data.get('algorithm') == 'COOP0':
+        if 'objective' in self.schedule_data:
             elements.append(Paragraph(
-                rtl(f"COOP0 | نقض قیود سخت: {self.schedule_data['hard_violations']} | "
+                rtl(f"{self.schedule_data['algorithm']} | نقض قیود سخت: {self.schedule_data['hard_violations']} | "
                     f"جریمه نرم: {self.schedule_data['soft_penalty']}"), summary_style
             ))
+            audit = self.schedule_data.get('weekly_load_audit', {})
+            if audit.get('included_in_H'):
+                elements.append(Paragraph(rtl('حداقل و حداکثر واحد هفتگی استادان در H محاسبه شده‌اند.'), summary_style))
+            elif audit.get('minimum_deficit_units') or audit.get('maximum_excess_units'):
+                elements.append(Paragraph(rtl('حدود هفتگی استادان در H محاسبه نشده‌اند و در این برنامه نقض دارند.'), summary_style))
+            if audit.get('stricter_model_proven_infeasible'):
+                elements.append(Paragraph(rtl('با سخت در نظر گرفتن حداقل بار هفتگی، داده‌های ورودی ناسازگارند.'), summary_style))
         elements.append(Paragraph(
             rtl(f"هزینه وزنی قدیمی: {self.schedule_result.total_cost} | "
                 f"تداخل اساتید: {self.schedule_result.teacher_conflicts} | "

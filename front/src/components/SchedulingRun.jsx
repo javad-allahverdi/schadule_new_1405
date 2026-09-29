@@ -27,6 +27,8 @@ const STATUS_COLOR = {
 const emptyForm = {
   name: "",
   description: "",
+  algorithm: "CP-SAT",
+  time_limit_seconds: 60,
   popsize: 40,
   max_evaluations: 3240,
   seed: '',
@@ -75,10 +77,12 @@ export default function SchedulingRun() {
     const population = Number(form.popsize);
     const budget = Number(form.max_evaluations);
     const seed = Number(form.seed);
-    if (!Number.isSafeInteger(population) || population < 4 ||
-        !Number.isSafeInteger(budget) || budget < population ||
+    const timeLimit = Number(form.time_limit_seconds);
+    if ((form.algorithm === 'CP-SAT'
+      ? !Number.isSafeInteger(timeLimit) || timeLimit < 1
+      : !Number.isSafeInteger(population) || population < 4 || !Number.isSafeInteger(budget) || budget < population) ||
         (form.seed !== '' && (!Number.isSafeInteger(seed) || seed < 0))) {
-      toast.error("جمعیت باید حداقل ۴ و بودجه حداقل برابر جمعیت باشد. بذر باید عدد صحیح نامنفی باشد.");
+      toast.error("پارامترهای روش انتخابی و بذر را به صورت عدد صحیح معتبر وارد کنید.");
       return;
     }
     setSaving(true);
@@ -193,6 +197,12 @@ export default function SchedulingRun() {
     if (!res.success) toast.error(res.message);
   };
 
+  const selectedData = selectedTask?.schedule_data;
+  const hasHardViolations = selectedData?.feasible === false ||
+    selectedData?.hard_violations > 0 ||
+    selectedData?.weekly_load_audit?.minimum_deficit_units > 0 ||
+    selectedData?.weekly_load_audit?.maximum_excess_units > 0;
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -204,7 +214,8 @@ export default function SchedulingRun() {
       </div>
 
       <p className="text-sm text-text_secondary_color mb-4">
-        روش COOP0 با همکاری BBO و گرگ خاکستری، ابتدا نقض قیود سخت و سپس جریمه ترجیحات را کاهش می‌دهد.
+        روش پیش‌فرض CP-SAT قیود سخت، از جمله بار هفتگی استادان، را رعایت می‌کند و جریمه ترجیحات را کاهش می‌دهد.
+        روش‌های COOP نیز برای انتخاب در دسترس هستند.
         نتیجه را همراه با وضعیت اعتبار برنامه می‌توانید بررسی، تأیید یا رد کنید.
       </p>
 
@@ -258,12 +269,25 @@ export default function SchedulingRun() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto p-1">
           <InputField id="name" label="نام این اجرا" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full sm:col-span-2" />
           <InputField id="description" label="توضیحات (اختیاری)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full sm:col-span-2" />
-          <InputField id="popsize" label="اندازه جمعیت الگوریتم" type="number" value={form.popsize} onChange={(e) => setForm({ ...form, popsize: e.target.value })} className="w-full" />
-          <InputField id="max_evaluations" label="بودجه ارزیابی جواب‌ها" type="number" value={form.max_evaluations} onChange={(e) => setForm({ ...form, max_evaluations: e.target.value })} className="w-full" />
+          <div className="sm:col-span-2">
+            <label htmlFor="algorithm" className="block text-sm mb-2">روش زمان‌بندی</label>
+            <select id="algorithm" value={form.algorithm} onChange={(e) => setForm({ ...form, algorithm: e.target.value })} className="w-full border border-line_color rounded-lg p-2 bg-white">
+              <option value="CP-SAT">CP-SAT — حل دقیق قیود (پیش‌فرض)</option>
+              <option value="COOP1">COOP1 — اصلاح هدفمند با رعایت بار هفتگی</option>
+              <option value="COOP1-RL">COOP1-RL — انتخاب اصلاح با یادگیری تقویتی (آزمایشی)</option>
+              <option value="COOP0">COOP0 — روش مقاله کنفرانس</option>
+            </select>
+          </div>
+          {form.algorithm === 'CP-SAT' ? (
+            <InputField id="time_limit_seconds" label="حداکثر زمان حل (ثانیه)" type="number" value={form.time_limit_seconds} onChange={(e) => setForm({ ...form, time_limit_seconds: e.target.value })} className="w-full" />
+          ) : (<>
+            <InputField id="popsize" label="اندازه جمعیت الگوریتم" type="number" value={form.popsize} onChange={(e) => setForm({ ...form, popsize: e.target.value })} className="w-full" />
+            <InputField id="max_evaluations" label="بودجه ارزیابی جواب‌ها" type="number" value={form.max_evaluations} onChange={(e) => setForm({ ...form, max_evaluations: e.target.value })} className="w-full" />
+          </>)}
           <InputField id="seed" label="بذر تصادفی (اختیاری)" type="number" value={form.seed} onChange={(e) => setForm({ ...form, seed: e.target.value })} className="w-full" />
           <p className="text-xs text-text_secondary_color sm:col-span-2">
-            بودجه بیشتر فرصت جست‌وجوی بیشتری می‌دهد و زمان اجرا را افزایش می‌دهد.
-            با داده‌ها، تنظیمات و بذر یکسان، نتیجه قابل تکرار است.
+            {form.algorithm === 'CP-SAT' ? 'زمان بیشتر فرصت بهینه‌سازی بیشتری می‌دهد.' : 'بودجه بیشتر فرصت جست‌وجوی بیشتری می‌دهد و زمان اجرا را افزایش می‌دهد.'}
+            {form.algorithm !== 'CP-SAT' && ' با داده‌ها، تنظیمات و بذر یکسان، نتیجه قابل تکرار است.'}
           </p>
         </div>
         <div className="flex justify-end gap-2 mt-6">
@@ -302,10 +326,21 @@ export default function SchedulingRun() {
 
             {selectedTask.status === "completed" && selectedTask.schedule_data && (
               <>
-                {selectedTask.schedule_data.algorithm === 'COOP0' && (
+                {selectedTask.schedule_data.objective && (
                   <div className={`rounded-lg p-3 mb-4 text-sm ${selectedTask.schedule_data.feasible ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'}`}>
                     <p>{selectedTask.schedule_data.feasible ? 'قیود سختِ ارزیابی‌شده رعایت شده‌اند.' : 'این برنامه هنوز نقض قید سخت دارد و نیازمند بازنگری است.'}</p>
-                    <p className="text-xs mt-1">COOP0 — ارزیابی: {selectedTask.schedule_data.evaluations} از {selectedTask.schedule_data.evaluation_budget} — بذر: {selectedTask.schedule_data.seed}</p>
+                    <p className="text-xs mt-1">{selectedTask.schedule_data.algorithm} — {selectedTask.schedule_data.algorithm === 'CP-SAT'
+                      ? `وضعیت حل: ${selectedTask.schedule_data.solver_status} — زمان: ${Number(selectedTask.schedule_data.solve_time_seconds).toFixed(1)} ثانیه`
+                      : `ارزیابی: ${selectedTask.schedule_data.evaluations} از ${selectedTask.schedule_data.evaluation_budget}`} — بذر: {selectedTask.schedule_data.seed}</p>
+                    {selectedTask.schedule_data.constraint_model === 'weekly-loads-v1' && (
+                      <p className="text-xs mt-1">حداقل و حداکثر واحد هفتگی استادان نیز جزو قیود سخت این اجرا هستند.</p>
+                    )}
+                    {!selectedTask.schedule_data.weekly_load_audit?.included_in_H && (selectedTask.schedule_data.weekly_load_audit?.minimum_deficit_units > 0 || selectedTask.schedule_data.weekly_load_audit?.maximum_excess_units > 0) && (
+                      <p className="text-warning mt-2">حدود بار هفتگی استادان در H محاسبه نشده‌اند و این برنامه آن‌ها را کامل رعایت نمی‌کند.</p>
+                    )}
+                    {selectedTask.schedule_data.weekly_load_audit?.stricter_model_proven_infeasible && (
+                      <p className="text-warning mt-1">داده‌های ورودی با سخت در نظر گرفتن حداقل بار هفتگی ناسازگارند؛ واحدهای دروس مجاز برای بعضی استادان از حداقل خواسته‌شده کمتر است.</p>
+                    )}
                   </div>
                 )}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
@@ -371,7 +406,7 @@ export default function SchedulingRun() {
                     <Download size={14} /> دانلود اکسل
                   </Button>
                   {selectedTask.approval_status !== "approved" && (
-                    <Button type="button" onClick={handleApprove} className="bg-success text-white px-3 py-2 w-auto h-auto flex items-center gap-1 text-sm">
+                    <Button type="button" onClick={handleApprove} disabled={hasHardViolations} title={hasHardViolations ? 'ابتدا نقض قیود سخت و بار هفتگی را برطرف کنید' : undefined} className="bg-success text-white px-3 py-2 w-auto h-auto flex items-center gap-1 text-sm disabled:opacity-50">
                       <CheckCircle2 size={14} /> تأیید و نهایی‌سازی
                     </Button>
                   )}

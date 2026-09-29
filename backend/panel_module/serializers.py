@@ -311,11 +311,18 @@ class SchedulingTaskSerializer(serializers.ModelSerializer):
     benchmark_key = serializers.CharField(source='university_config.benchmark_key', read_only=True)
 
     def validate_algorithm_params(self, value):
-        from scheduling.algorithm.coop0 import validate_parameters
+        from scheduling_module.search_policy import application_parameters
         try:
-            return validate_parameters(value)
+            return application_parameters(value)
         except ValueError as exc:
             raise serializers.ValidationError(str(exc)) from exc
+
+    def create(self, validated_data):
+        from scheduling_module.search_policy import application_parameters
+        validated_data['algorithm_params'] = application_parameters(
+            validated_data.get('algorithm_params', {})
+        )
+        return super().create(validated_data)
 
     class Meta:
         model = SchedulingTask

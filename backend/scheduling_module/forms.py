@@ -68,7 +68,15 @@ class SchedulingConfigForm(forms.Form):
         })
     )
 
-    # COOP0 search controls; cost weights are no longer optimization parameters.
+    algorithm = forms.ChoiceField(
+        label='روش زمان‌بندی', initial='CP-SAT',
+        choices=[('CP-SAT', 'CP-SAT — حل دقیق قیود (پیش‌فرض)'),
+                 ('COOP1', 'COOP1 — اصلاح هدفمند با رعایت بار هفتگی'),
+                 ('COOP1-RL', 'COOP1-RL — انتخاب اصلاح با یادگیری تقویتی (آزمایشی)'),
+                 ('COOP0', 'COOP0 — روش مقاله کنفرانس')],
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    # Cost weights are no longer optimization parameters.
     popsize = forms.IntegerField(
         label='اندازه جمعیت', initial=40, min_value=4,
         widget=forms.NumberInput(attrs={'class': 'form-control'})
@@ -81,10 +89,16 @@ class SchedulingConfigForm(forms.Form):
         label='بذر تصادفی (اختیاری)', required=False, min_value=0, max_value=2**53 - 1,
         widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
+    time_limit_seconds = forms.IntegerField(
+        label='حداکثر زمان حل (ثانیه)', initial=60, min_value=1, required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
 
     def clean(self):
         data = super().clean()
-        if data.get('popsize') and data.get('max_evaluations'):
+        if data.get('time_limit_seconds') is None:
+            data['time_limit_seconds'] = 60
+        if data.get('algorithm') != 'CP-SAT' and data.get('popsize') and data.get('max_evaluations'):
             if data['max_evaluations'] < data['popsize']:
                 self.add_error('max_evaluations', 'بودجه باید حداقل برابر اندازه جمعیت باشد.')
         return data

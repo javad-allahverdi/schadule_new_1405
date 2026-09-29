@@ -98,8 +98,9 @@ export default function BenchmarkSeeds({ onSeedLoaded, universityId = null }) {
 
       <div className="bg-secondary/5 border border-secondary/20 rounded-lg p-4 mb-5 text-sm text-text_secondary_color leading-relaxed">
         هر مجموعه یک نیمسال کامل و ساختگی است که در کنار آن یک <strong>پاسخ مرجع</strong> نگهداری
-        می‌شود: زمان‌بندی‌ای که با جست‌وجوی کامل ساخته شده، هیچ محدودیتی را نقض نمی‌کند و
-        هزینه‌ی آن با تابع هزینه‌ی خودِ الگوریتم برابر صفر تأیید شده است. با بارگذاری یک مجموعه،
+        می‌شود. پاسخ‌های مرجع مجموعه‌های اصلی بر اساس مدل کنفرانس ارزیابی شده‌اند.
+        برای اجرای S5 با قیود سخت بار هفتگی، نسخه اصلاح‌شده S5-W را انتخاب کنید؛
+        داده‌های S5 اصلی با این قیود ناسازگارند. با بارگذاری یک مجموعه،
         یک نیمسال جدید ساخته و فعال می‌شود؛ سپس از تب «زمان‌بندی هوشمند» الگوریتم را اجرا کنید و
         در همان‌جا دکمه‌ی «مقایسه با پاسخ مرجع» نتیجه را ارزیابی می‌کند.
       </div>
@@ -281,7 +282,7 @@ function SeedDetail({ seed, tab, onTab }) {
           <SimpleTable
             columns={['نوع', 'پارامترها', 'توضیح']}
             rows={seed.constraints.map((c) => [
-              c.type === 'place_unavailable' ? 'عدم دسترسی مکان' : 'ترجیح زمانی',
+              c.type === 'teacher_weekly_load' ? 'حدود هفتگی استادان (سخت)' : c.type === 'place_unavailable' ? 'عدم دسترسی مکان' : 'ترجیح زمانی',
               JSON.stringify(c.parameters, null, 0),
               c.description || '—',
             ])}

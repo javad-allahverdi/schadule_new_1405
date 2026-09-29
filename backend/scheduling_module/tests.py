@@ -19,7 +19,7 @@ class BenchmarkSeedIntegrityTests(TestCase):
 
     def test_all_seeds_are_loadable(self):
         seeds = load_all_seeds()
-        self.assertEqual(len(seeds), 5, 'باید دقیقاً پنج مجموعه‌ی داده‌ی آزمون وجود داشته باشد')
+        self.assertEqual(len(seeds), 6, 'پنج نمونه اصلی و نسخه اصلاح‌شده مستقل S5-W باید موجود باشند')
         for seed in seeds:
             for key in ('key', 'title', 'description', 'settings', 'places',
                         'teachers', 'courses', 'student_groups', 'target', 'stats'):
@@ -282,10 +282,10 @@ class BenchmarkAPITests(TestCase):
         client.force_authenticate(user=user)
         return client
 
-    def test_seed_list_returns_all_five(self):
+    def test_seed_list_returns_original_five_and_corrected_variant(self):
         response = self._client(self.admin).get('/scheduling/api/benchmarks/seeds/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['count'], 6)
         first = response.data['results'][0]
         for key in ('key', 'title', 'difficulty_label', 'stats', 'target_cost', 'loaded_config'):
             self.assertIn(key, first)

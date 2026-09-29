@@ -36,8 +36,10 @@ const schedulingService = {
         description: formData.description || '',
         university_config: parseInt(activeId),
         algorithm_params: {
-          popsize: parseInt(formData.popsize) || 40,
-          max_evaluations: Number(formData.max_evaluations),
+          algorithm: formData.algorithm || 'CP-SAT',
+          ...(formData.algorithm !== 'CP-SAT'
+            ? { popsize: Number(formData.popsize), max_evaluations: Number(formData.max_evaluations) }
+            : { time_limit_seconds: Number(formData.time_limit_seconds) }),
           ...(formData.seed !== '' && formData.seed != null ? { seed: Number(formData.seed) } : {}),
         },
       };
